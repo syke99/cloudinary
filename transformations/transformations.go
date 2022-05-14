@@ -50,210 +50,211 @@ type transformer interface {
 }
 
 func (t Transformer) AddExtension(trnsfmtn []string, ext string) []string {
-	var med any
+	var med []string
 	return med
 }
 
-func (t Transformer) AddAngle(media any, angle Angle) any {
-	var med any
+func (t Transformer) AddAngle(media []string, angle Angle) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddAspectRatio(media any, ar AspectRatio) any {
-	var med any
+func (t Transformer) AddAspectRatio(media []string, ar AspectRatio) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddAudioCodec(media any, ac AudioCodec) any {
-	var med any
+func (t Transformer) AddAudioCodec(media []string, ac AudioCodec) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddAudioFrequency(media any, af AudioFrequency) any {
-	var med any
+func (t Transformer) AddAudioFrequency(media []string, af AudioFrequency) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddBackground(media any, background Background) any {
-	var med any
+func (t Transformer) AddBackground(media []string, background Background) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddBorder(media any, border Border) any {
-	var med any
+func (t Transformer) AddBorder(media []string, border Border) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddBitrate(media any, bitrate BitRate) any {
-	var med any
+func (t Transformer) AddBitrate(media []string, bitrate BitRate) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddCropOrResize(media any, resize CropResize) any {
-	var med any
+func (t Transformer) AddCropOrResize(media []string, resize CropResize) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddColor(media any, color Color) any {
-	var med any
+func (t Transformer) AddColor(media []string, color Color) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddColorSpace(media any, space ColorSpace) any {
-	var med any
+func (t Transformer) AddColorSpace(media []string, space ColorSpace) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddDefaultImage(media any, defaultImage DefaultImage) any {
-	var med any
+func (t Transformer) AddDefaultImage(media []string, defaultImage DefaultImage) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddDelay(media any, delay Delay) any {
-	var med any
+func (t Transformer) AddDelay(media []string, delay Delay) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddDensity(media any, density Density) any {
-	var med any
+func (t Transformer) AddDensity(media []string, density Density) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddDPR(media any, dpr DPR) any {
-	var med any
+func (t Transformer) AddDPR(media []string, dpr DPR) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddDuration(media any, duration Duration) any {
-	var med any
+func (t Transformer) AddDuration(media []string, duration Duration) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddEffect(media any, effect Effect) any {
-	var med any
+func (t Transformer) AddEffect(media []string, effect Effect) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddEndOffset(media any) any {
-	var med any
+func (t Transformer) AddEndOffset(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddFormat(media any) any {
-	var med any
+func (t Transformer) AddFormat(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddFlag(media any) any {
-	var med any
+func (t Transformer) AddFlag(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddFPS(media any) any {
-	var med any
+func (t Transformer) AddFPS(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddCustomFunction(media any) any {
-	var med any
+func (t Transformer) AddCustomFunction(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddGravity(media any) any {
-	var med any
+func (t Transformer) AddGravity(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddHeight(media any) any {
-	var med any
+func (t Transformer) AddHeight(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddIf(media any) any {
-	var med any
+func (t Transformer) AddIf(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddKeyframeInterval(media any) any {
-	var med any
+func (t Transformer) AddKeyframeInterval(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddLayer(media any) any {
-	var med any
+func (t Transformer) AddLayer(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddOpacity(media any) any {
-	var med any
+func (t Transformer) AddOpacity(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddPrefix(media any) any {
-	var med any
+func (t Transformer) AddPrefix(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddPageOrFileLayer(media any) any {
-	var med any
+func (t Transformer) AddPageOrFileLayer(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddQuality(media any) any {
-	var med any
+func (t Transformer) AddQuality(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddRoundCorners(media any) any {
-	var med any
+func (t Transformer) AddRoundCorners(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddStartOffset(media any) any {
-	var med any
+func (t Transformer) AddStartOffset(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddStreamingProfile(media any) any {
-	var med any
+func (t Transformer) AddStreamingProfile(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddNamedTransformation(media any) any {
-	var med any
+func (t Transformer) AddNamedTransformation(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddUnderlay(media any) any {
-	var med any
+func (t Transformer) AddUnderlay(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddVideoCodec(media any) any {
-	var med any
+func (t Transformer) AddVideoCodec(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddVideoSampling(media any) any {
-	var med any
+func (t Transformer) AddVideoSampling(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddWidth(media any) any {
+func (t Transformer) AddWidth(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddXY(media any) any {
-	var med any
+func (t Transformer) AddXY(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddZoom(media any) any {
-	var med any
+func (t Transformer) AddZoom(media []string) []string {
+	var med []string
 	return med
 }
 
-func (t Transformer) AddVariable(media any) any {
-	var med any
+func (t Transformer) AddVariable(media []string) []string {
+	var med []string
 	return med
 }
