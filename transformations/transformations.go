@@ -7,594 +7,798 @@ import (
 	"reflect"
 )
 
-type Transformations struct {
-	transformations
+type Transformer struct {
+	transformer
 }
 
-type transformations interface {
-	AddExtension(interface{}, string) interface{}
-	AddAngle(interface{}, Angle) interface{}
-	AddAspectRatio(interface{}, AspectRatio) interface{}
-	AddAudioCodec(interface{}, AudioCodec) interface{}
-	AddAudioFrequency(interface{}, AudioFrequency) interface{}
-	AddBackground(interface{}, Background) interface{}
-	AddBorder(interface{}, Border) interface{}
-	AddBitrate(interface{}, BitRate) interface{}
-	AddCropOrResize(interface{}, CropResize) interface{}
-	AddColor(interface{}, Color) interface{}
-	AddColorSpace(interface{}, ColorSpace) interface{}
-	AddDefaultImage(interface{}, DefaultImage) interface{}
-	AddDelay(interface{}, Delay) interface{}
-	AddDensity(interface{}, Density) interface{}
-	AddDPR(interface{}, DPR) interface{}
-	AddDuration(interface{}, Duration) interface{}
-	AddEffect(interface{}, Effect) interface{}
-	AddEndOffset(interface{}) interface{}
-	AddFormat(interface{}) interface{}
-	AddFlag(interface{}) interface{}
-	AddFPS(interface{}) interface{}
-	AddCustomFunction(interface{}) interface{}
-	AddGravity(interface{}) interface{}
-	AddHeight(interface{}) interface{}
-	AddIf(interface{}) interface{}
-	AddKeyframeInterval(interface{}) interface{}
-	AddLayer(interface{}) interface{}
-	AddOpacity(interface{}) interface{}
-	AddPrefix(interface{}) interface{}
-	AddPageOrFileLayer(interface{}) interface{}
-	AddQuality(interface{}) interface{}
-	AddRoundCorners(interface{}) interface{}
-	AddStartOffset(interface{}) interface{}
-	AddStreamingProfile(interface{}) interface{}
-	AddNamedTransformation(interface{}) interface{}
-	AddUnderlay(interface{}) interface{}
-	AddVideoCodec(interface{}) interface{}
-	AddVideoSampling(interface{}) interface{}
-	AddWidth(interface{}) interface{}
-	AddXY(interface{}) interface{}
-	AddZoom(interface{}) interface{}
-	AddVariable(interface{}) interface{}
+type transformer[Image image.Image, Video video.Video] interface {
+	AddExtension(Image, Video, string) any
+	AddAngle(any, Angle) any
+	AddAspectRatio(any, AspectRatio) any
+	AddAudioCodec(any, AudioCodec) any
+	AddAudioFrequency(any, AudioFrequency) any
+	AddBackground(any, Background) any
+	AddBorder(any, Border) any
+	AddBitrate(any, BitRate) any
+	AddCropOrResize(any, CropResize) any
+	AddColor(any, Color) any
+	AddColorSpace(any, ColorSpace) any
+	AddDefaultImage(any, DefaultImage) any
+	AddDelay(any, Delay) any
+	AddDensity(any, Density) any
+	AddDPR(any, DPR) any
+	AddDuration(any, Duration) any
+	AddEffect(any, Effect) any
+	AddEndOffset(any) any
+	AddFormat(any) any
+	AddFlag(any) any
+	AddFPS(any) any
+	AddCustomFunction(any) any
+	AddGravity(any) any
+	AddHeight(any) any
+	AddIf(any) any
+	AddKeyframeInterval(any) any
+	AddLayer(any) any
+	AddOpacity(any) any
+	AddPrefix(any) any
+	AddPageOrFileLayer(any) any
+	AddQuality(any) any
+	AddRoundCorners(any) any
+	AddStartOffset(any) any
+	AddStreamingProfile(any) any
+	AddNamedTransformation(any) any
+	AddUnderlay(any) any
+	AddVideoCodec(any) any
+	AddVideoSampling(any) any
+	AddWidth(any) any
+	AddXY(any) any
+	AddZoom(any) any
+	AddVariable(any) any
 }
 
-func (t Transformations) AddExtension(media interface{}, ext string) interface{} {
+func (t Transformer) AddExtension(media any, ext string) any {
+	var med any
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ext)))
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ext)))
 	}
-	return media
+	return med
 }
 
-func (t Transformations) AddAngle(media interface{}, angle Angle) interface{} {
+func (t Transformer) AddAngle(media any, angle Angle) any {
+	var med any
+	switch media.(type) {
+	case image.Image:
+		img := media.(image.Image)
+		med = img
+		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ext)))
+	case video.Video:
+		vid := media.(video.Video)
+		med = vid
+		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ext)))
+	}
+	return med
+}
+
+func (t Transformer) AddAspectRatio(media any, ar AspectRatio) any {
+	var med any
+	switch media.(type) {
+	case image.Image:
+		img := media.(image.Image)
+		med = img
+		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ar)))
+	case video.Video:
+		vid := media.(video.Video)
+		med = vid
+		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ar)))
+	}
+	return med
+}
+
+func (t Transformer) AddAudioCodec(media any, ac AudioCodec) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddAspectRatio(media interface{}, ar AspectRatio) interface{} {
+func (t Transformer) AddAudioFrequency(media any, af AudioFrequency) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddAudioCodec(media interface{}, ac AudioCodec) interface{} {
+func (t Transformer) AddBackground(media any, background Background) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddAudioFrequency(media interface{}, af AudioFrequency) interface{} {
+func (t Transformer) AddBorder(media any, border Border) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddBackground(media interface{}, background Background) interface{} {
+func (t Transformer) AddBitrate(media any, bitrate BitRate) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddBorder(media interface{}, border Border) interface{} {
+func (t Transformer) AddCropOrResize(media any, resize CropResize) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddBitrate(media interface{}, bitrate BitRate) interface{} {
+func (t Transformer) AddColor(media any, color Color) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddCropOrResize(media interface{}, resize CropResize) interface{} {
+func (t Transformer) AddColorSpace(media any, space ColorSpace) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddColor(media interface{}, color Color) interface{} {
+func (t Transformer) AddDefaultImage(media any, defaultImage DefaultImage) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddColorSpace(media interface{}, space ColorSpace) interface{} {
+func (t Transformer) AddDelay(media any, delay Delay) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddDefaultImage(media interface{}, defaultImage DefaultImage) interface{} {
+func (t Transformer) AddDensity(media any, density Density) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddDelay(media interface{}, delay Delay) interface{} {
+func (t Transformer) AddDPR(media any, dpr DPR) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddDensity(media interface{}, density Density) interface{} {
+func (t Transformer) AddDuration(media any, duration Duration) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddDPR(media interface{}, dpr DPR) interface{} {
+func (t Transformer) AddEffect(media any, effect Effect) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddDuration(media interface{}, duration Duration) interface{} {
+func (t Transformer) AddEndOffset(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddEffect(media interface{}, effect Effect) interface{} {
+func (t Transformer) AddFormat(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddEndOffset(media interface{}) interface{} {
+func (t Transformer) AddFlag(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddFormat(media interface{}) interface{} {
+func (t Transformer) AddFPS(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddFlag(media interface{}) interface{} {
+func (t Transformer) AddCustomFunction(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddFPS(media interface{}) interface{} {
+func (t Transformer) AddGravity(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddCustomFunction(media interface{}) interface{} {
+func (t Transformer) AddHeight(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddGravity(media interface{}) interface{} {
+func (t Transformer) AddIf(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddHeight(media interface{}) interface{} {
+func (t Transformer) AddKeyframeInterval(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddIf(media interface{}) interface{} {
+func (t Transformer) AddLayer(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddKeyframeInterval(media interface{}) interface{} {
+func (t Transformer) AddOpacity(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddLayer(media interface{}) interface{} {
+func (t Transformer) AddPrefix(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddOpacity(media interface{}) interface{} {
+func (t Transformer) AddPageOrFileLayer(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddPrefix(media interface{}) interface{} {
+func (t Transformer) AddQuality(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddPageOrFileLayer(media interface{}) interface{} {
+func (t Transformer) AddRoundCorners(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddQuality(media interface{}) interface{} {
+func (t Transformer) AddStartOffset(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddRoundCorners(media interface{}) interface{} {
+func (t Transformer) AddStreamingProfile(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddStartOffset(media interface{}) interface{} {
+func (t Transformer) AddNamedTransformation(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddStreamingProfile(media interface{}) interface{} {
+func (t Transformer) AddUnderlay(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddNamedTransformation(media interface{}) interface{} {
+func (t Transformer) AddVideoCodec(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddUnderlay(media interface{}) interface{} {
+func (t Transformer) AddVideoSampling(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddVideoCodec(media interface{}) interface{} {
+func (t Transformer) AddWidth(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddVideoSampling(media interface{}) interface{} {
+func (t Transformer) AddXY(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddWidth(media interface{}) interface{} {
+func (t Transformer) AddZoom(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
+	return med
 }
 
-func (t Transformations) AddXY(media interface{}) interface{} {
+func (t Transformer) AddVariable(media any) any {
+	var med any
 	var url string
 	switch media.(type) {
 	case image.Image:
+		img := media.(image.Image)
+		med = img
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	case video.Video:
+		vid := media.(video.Video)
+		med = vid
 		url = reflect.ValueOf(media).FieldByName("Url").String()
 	}
 	//this is just a placeholder to curb errors during development, will be removed
 	println(url)
-	return media
-}
-
-func (t Transformations) AddZoom(media interface{}) interface{} {
-	var url string
-	switch media.(type) {
-	case image.Image:
-		url = reflect.ValueOf(media).FieldByName("Url").String()
-	case video.Video:
-		url = reflect.ValueOf(media).FieldByName("Url").String()
-	}
-	//this is just a placeholder to curb errors during development, will be removed
-	println(url)
-	return media
-}
-
-func (t Transformations) AddVariable(media interface{}) interface{} {
-	var url string
-	switch media.(type) {
-	case image.Image:
-		url = reflect.ValueOf(media).FieldByName("Url").String()
-	case video.Video:
-		url = reflect.ValueOf(media).FieldByName("Url").String()
-	}
-	//this is just a placeholder to curb errors during development, will be removed
-	println(url)
-	return media
+	return med
 }
