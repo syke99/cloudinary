@@ -2,17 +2,18 @@ package transformations
 
 import (
 	"fmt"
+	"reflect"
+
 	"github.com/syke99/cloudinary/image"
 	"github.com/syke99/cloudinary/video"
-	"reflect"
 )
 
 type Transformer struct {
 	transformer
 }
 
-type transformer[Image image.Image, Video video.Video] interface {
-	AddExtension(Image, Video, string) any
+type transformer interface {
+	AddExtension(any, string) any
 	AddAngle(any, Angle) any
 	AddAspectRatio(any, AspectRatio) any
 	AddAudioCodec(any, AudioCodec) any
@@ -77,11 +78,11 @@ func (t Transformer) AddAngle(media any, angle Angle) any {
 	case image.Image:
 		img := media.(image.Image)
 		med = img
-		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ext)))
+		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", angle)))
 	case video.Video:
 		vid := media.(video.Video)
 		med = vid
-		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", ext)))
+		reflect.ValueOf(media).FieldByName("Ext").Set(reflect.ValueOf(fmt.Sprintf(".%s", angle)))
 	}
 	return med
 }

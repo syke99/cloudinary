@@ -2,6 +2,7 @@ package image
 
 import (
 	"fmt"
+
 	"github.com/syke99/cloudinary/request"
 	"github.com/syke99/cloudinary/transformations"
 	"github.com/syke99/cloudinary/validation"

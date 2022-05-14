@@ -2,6 +2,7 @@ package cloudinary
 
 import (
 	"fmt"
+
 	"github.com/syke99/cloudinary/image"
 	"github.com/syke99/cloudinary/resources"
 	"github.com/syke99/cloudinary/transformations"
@@ -28,9 +29,9 @@ func (c Cloudinary) Image(name string) image.Image {
 	url := fmt.Sprintf("%s/%s/image/", resources.BaseUrl, c.cloud)
 
 	return image.Image{
-		Transformations: transformations.Transformations{},
-		Name:            name,
-		Url:             url,
+		Transformer: transformations.Transformer{},
+		Name:        name,
+		Url:         url,
 	}
 }
 
@@ -38,8 +39,8 @@ func (c Cloudinary) Video(name string) video.Video {
 	url := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.cloud)
 
 	return video.Video{
-		Transformations: transformations.Transformations{},
-		Name:            name,
-		Url:             url,
+		Transformer: transformations.Transformer{},
+		Name:        name,
+		Url:         url,
 	}
 }
