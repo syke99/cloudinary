@@ -49,7 +49,7 @@ type transformer interface {
 	AddVariable([]string) []string
 }
 
-func (t Transformer) AddExtension(trnsfmtn any, ext string) any {
+func (t Transformer) AddExtension(trnsfmtn []string, ext string) []string {
 	var med any
 	return med
 }
