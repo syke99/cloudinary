@@ -15,30 +15,30 @@ type Cloudinary struct {
 }
 
 type cloudinary interface {
-	Image() *image.Image
-	Video() *video.Video
+	Image() image.Image
+	Video() video.Video
 }
 
-func NewCloudinary(cloud string) Cloudinary {
-	return Cloudinary{
+func NewCloudinary(cloud string) *Cloudinary {
+	return &Cloudinary{
 		cloud: cloud,
 	}
 }
 
-func (c Cloudinary) Image(name string) *image.Image {
+func (c Cloudinary) Image(name string) image.Image {
 	url := fmt.Sprintf("%s/%s/image/", resources.BaseUrl, c.cloud)
 
-	return &image.Image{
+	return image.Image{
 		Transformer: transformer.Transformer{},
 		Name:        name,
 		Url:         url,
 	}
 }
 
-func (c Cloudinary) Video(name string) *video.Video {
+func (c Cloudinary) Video(name string) video.Video {
 	url := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.cloud)
 
-	return &video.Video{
+	return video.Video{
 		Transformer: transformer.Transformer{},
 		Name:        name,
 		Url:         url,
