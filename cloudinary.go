@@ -15,8 +15,8 @@ type Cloudinary struct {
 }
 
 type cloudinary interface {
-	Image() image.Image
-	Video() video.Video
+	Image() *image.Image
+	Video() *video.Video
 }
 
 func NewCloudinary(cloud string) Cloudinary {
