@@ -3,6 +3,7 @@ package image
 import (
 	"fmt"
 
+	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
 	"github.com/syke99/cloudinary/transformer"
 	"github.com/syke99/cloudinary/validator"
@@ -49,7 +50,7 @@ type image interface {
 	AddXY() Image
 	AddZoom() Image
 	AddVariable() Image
-	RequestImage(string) ([]byte, error)
+	RequestImage(string, config.Config) ([]byte, error)
 }
 
 func (i Image) AddExtension(ext string) Image {
@@ -207,7 +208,7 @@ func (i Image) AddVariable() Image {
 	return i
 }
 
-func (i Image) RequestImage(delivery string) ([]byte, error) {
+func (i Image) RequestImage(delivery string, config config.Config) ([]byte, error) {
 	err := validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err

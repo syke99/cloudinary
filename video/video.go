@@ -3,6 +3,7 @@ package video
 import (
 	"fmt"
 
+	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
 	"github.com/syke99/cloudinary/transformer"
 	"github.com/syke99/cloudinary/validator"
@@ -52,7 +53,7 @@ type video interface {
 	AddWidth() Video
 	AddXY() Video
 	AddVariable() Video
-	RequestVideo(string) ([]byte, error)
+	RequestVideo(string, config.Config) ([]byte, error)
 }
 
 func (v Video) AddExtension(ext string) Video {
@@ -225,7 +226,7 @@ func (v Video) AddVariable() Video {
 	return v
 }
 
-func (v Video) RequestVideo(delivery string) ([]byte, error) {
+func (v Video) RequestVideo(delivery string, config config.Config) ([]byte, error) {
 	err := validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err
