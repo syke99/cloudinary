@@ -45,19 +45,11 @@ func NewSignedCloudinary(cloud string, key string, secret string) *Cloudinary {
 func (c Cloudinary) Image(name string) image.Image {
 	url := fmt.Sprintf("%s/%s/image/", resources.BaseUrl, c.config.Cloud)
 
-	return image.Image{
-		Transformer: transformer.Transformer{},
-		Name:        name,
-		Url:         url,
-	}
+	return image.Image{}.NewImage(name, url, transformer.Transformer{}, c.config)
 }
 
 func (c Cloudinary) Video(name string) video.Video {
 	url := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.config.Cloud)
 
-	return video.Video{
-		Transformer: transformer.Transformer{},
-		Name:        name,
-		Url:         url,
-	}
+	return video.Video{}.NewVideo(name, url, transformer.Transformer{}, c.config)
 }

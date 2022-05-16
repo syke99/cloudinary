@@ -10,15 +10,17 @@ import (
 )
 
 type Image struct {
-	Transformer transformer.Transformer
-	transformer []string
-	Name        string
-	Ext         string
-	Url         string
+	config          config.Config
+	Transformer     transformer.Transformer
+	transformations []string
+	Name            string
+	Ext             string
+	Url             string
 	image
 }
 
 type image interface {
+	NewImage(string, string, transformer.Transformer, config.Config) Image
 	AddExtension(string) Image
 	AddAngle(transformer.Angle) Image
 	AddAspectRatio(transformer.AspectRatio) Image
@@ -50,165 +52,176 @@ type image interface {
 	AddXY() Image
 	AddZoom() Image
 	AddVariable() Image
-	RequestImage(string, config.Config) ([]byte, error)
+	RequestImage(string) ([]byte, error)
+}
+
+func (i Image) NewImage(name string, url string, transformer transformer.Transformer, config config.Config) Image {
+	i.config = config
+	i.Transformer = transformer
+	i.transformations = []string{}
+	i.Name = name
+	i.Ext = ""
+	i.Url = url
+
+	return i
 }
 
 func (i Image) AddExtension(ext string) Image {
-	i.transformer = i.Transformer.AddExtension(i.transformer, ext)
+	i.transformations = i.Transformer.AddExtension(i.transformations, ext)
 	return i
 }
 
 func (i Image) AddAngle(angle transformer.Angle) Image {
-	i.transformer = i.Transformer.AddAngle(i.transformer, angle)
+	i.transformations = i.Transformer.AddAngle(i.transformations, angle)
 	return i
 }
 
 func (i Image) AddAspectRatio(ar transformer.AspectRatio) Image {
-	i.transformer = i.Transformer.AddAspectRatio(i.transformer, ar)
+	i.transformations = i.Transformer.AddAspectRatio(i.transformations, ar)
 	return i
 }
 
 func (i Image) AddBackground(background transformer.Background) Image {
-	i.transformer = i.Transformer.AddBackground(i.transformer, background)
+	i.transformations = i.Transformer.AddBackground(i.transformations, background)
 	return i
 }
 
 func (i Image) AddBorder(border transformer.Border) Image {
-	i.transformer = i.Transformer.AddBorder(i.transformer, border)
+	i.transformations = i.Transformer.AddBorder(i.transformations, border)
 	return i
 }
 
 func (i Image) AddCropOrResize(resize transformer.CropResize) Image {
-	i.transformer = i.Transformer.AddCropOrResize(i.transformer, resize)
+	i.transformations = i.Transformer.AddCropOrResize(i.transformations, resize)
 	return i
 }
 
 func (i Image) AddColor(color transformer.Color) Image {
-	i.transformer = i.Transformer.AddColor(i.transformer, color)
+	i.transformations = i.Transformer.AddColor(i.transformations, color)
 	return i
 }
 
 func (i Image) AddColorSpace(space transformer.ColorSpace) Image {
-	i.transformer = i.Transformer.AddColorSpace(i.transformer, space)
+	i.transformations = i.Transformer.AddColorSpace(i.transformations, space)
 	return i
 }
 
 func (i Image) AddDefaultImage(defaultImage transformer.DefaultImage) Image {
-	i.transformer = i.Transformer.AddDefaultImage(i.transformer, defaultImage)
+	i.transformations = i.Transformer.AddDefaultImage(i.transformations, defaultImage)
 	return i
 }
 
 func (i Image) AddDelay(delay transformer.Delay) Image {
-	i.transformer = i.Transformer.AddDelay(i.transformer, delay)
+	i.transformations = i.Transformer.AddDelay(i.transformations, delay)
 	return i
 }
 
 func (i Image) AddDensity(density transformer.Density) Image {
-	i.transformer = i.Transformer.AddDensity(i.transformer, density)
+	i.transformations = i.Transformer.AddDensity(i.transformations, density)
 	return i
 }
 
 func (i Image) AddDPR(dpr transformer.DPR) Image {
-	i.transformer = i.Transformer.AddDPR(i.transformer, dpr)
+	i.transformations = i.Transformer.AddDPR(i.transformations, dpr)
 	return i
 }
 
 func (i Image) AddEffect(effect transformer.Effect) Image {
-	i.transformer = i.Transformer.AddEffect(i.transformer, effect)
+	i.transformations = i.Transformer.AddEffect(i.transformations, effect)
 	return i
 }
 
 func (i Image) AddFormat() Image {
-	i.transformer = i.Transformer.AddFormat(i.transformer)
+	i.transformations = i.Transformer.AddFormat(i.transformations)
 	return i
 }
 
 func (i Image) AddFlag() Image {
-	i.transformer = i.Transformer.AddFlag(i.transformer)
+	i.transformations = i.Transformer.AddFlag(i.transformations)
 	return i
 }
 
 func (i Image) AddCustomFunction() Image {
-	i.transformer = i.Transformer.AddCustomFunction(i.transformer)
+	i.transformations = i.Transformer.AddCustomFunction(i.transformations)
 	return i
 }
 
 func (i Image) AddGravity() Image {
-	i.transformer = i.Transformer.AddGravity(i.transformer)
+	i.transformations = i.Transformer.AddGravity(i.transformations)
 	return i
 }
 
 func (i Image) AddHeight() Image {
-	i.transformer = i.Transformer.AddHeight(i.transformer)
+	i.transformations = i.Transformer.AddHeight(i.transformations)
 	return i
 }
 
 func (i Image) AddIf() Image {
-	i.transformer = i.Transformer.AddIf(i.transformer)
+	i.transformations = i.Transformer.AddIf(i.transformations)
 	return i
 }
 
 func (i Image) AddLayer() Image {
-	i.transformer = i.Transformer.AddLayer(i.transformer)
+	i.transformations = i.Transformer.AddLayer(i.transformations)
 	return i
 }
 
 func (i Image) AddOpacity() Image {
-	i.transformer = i.Transformer.AddOpacity(i.transformer)
+	i.transformations = i.Transformer.AddOpacity(i.transformations)
 	return i
 }
 
 func (i Image) AddPrefix() Image {
-	i.transformer = i.Transformer.AddPrefix(i.transformer)
+	i.transformations = i.Transformer.AddPrefix(i.transformations)
 	return i
 }
 
 func (i Image) AddPageOrFileLayer() Image {
-	i.transformer = i.Transformer.AddPageOrFileLayer(i.transformer)
+	i.transformations = i.Transformer.AddPageOrFileLayer(i.transformations)
 	return i
 }
 
 func (i Image) AddQuality() Image {
-	i.transformer = i.Transformer.AddQuality(i.transformer)
+	i.transformations = i.Transformer.AddQuality(i.transformations)
 	return i
 }
 
 func (i Image) AddRoundCorners() Image {
-	i.transformer = i.Transformer.AddRoundCorners(i.transformer)
+	i.transformations = i.Transformer.AddRoundCorners(i.transformations)
 	return i
 }
 
 func (i Image) AddNamedTransformation() Image {
-	i.transformer = i.Transformer.AddNamedTransformation(i.transformer)
+	i.transformations = i.Transformer.AddNamedTransformation(i.transformations)
 	return i
 }
 
 func (i Image) AddUnderlay() Image {
-	i.transformer = i.Transformer.AddUnderlay(i.transformer)
+	i.transformations = i.Transformer.AddUnderlay(i.transformations)
 	return i
 }
 
 func (i Image) AddWidth() Image {
-	i.transformer = i.Transformer.AddWidth(i.transformer)
+	i.transformations = i.Transformer.AddWidth(i.transformations)
 	return i
 }
 
 func (i Image) AddXY() Image {
-	i.transformer = i.Transformer.AddXY(i.transformer)
+	i.transformations = i.Transformer.AddXY(i.transformations)
 	return i
 }
 
 func (i Image) AddZoom() Image {
-	i.transformer = i.Transformer.AddZoom(i.transformer)
+	i.transformations = i.Transformer.AddZoom(i.transformations)
 	return i
 }
 
 func (i Image) AddVariable() Image {
-	i.transformer = i.Transformer.AddVariable(i.transformer)
+	i.transformations = i.Transformer.AddVariable(i.transformations)
 	return i
 }
 
-func (i Image) RequestImage(delivery string, config config.Config) ([]byte, error) {
+func (i Image) RequestImage(delivery string) ([]byte, error) {
 	err := validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err

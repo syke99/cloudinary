@@ -10,6 +10,7 @@ import (
 )
 
 type Video struct {
+	config          config.Config
 	Transformer     transformer.Transformer
 	Transformations []string
 	Name            string
@@ -19,6 +20,7 @@ type Video struct {
 }
 
 type video interface {
+	NewVideo(string, string, transformer.Transformer, config.Config) Video
 	AddExtension(string) Video
 	AddAngle(transformer.Angle) Video
 	AddAudioCodec(transformer.AudioCodec) Video
@@ -53,7 +55,17 @@ type video interface {
 	AddWidth() Video
 	AddXY() Video
 	AddVariable() Video
-	RequestVideo(string, config.Config) ([]byte, error)
+	RequestVideo(string) ([]byte, error)
+}
+
+func (v Video) NewVideo(name string, url string, transformer transformer.Transformer, config config.Config) Video {
+	v.config = config
+	v.Transformer = transformer
+	v.Transformations = []string{}
+	v.Name = name
+	v.Ext = ""
+	v.Url = url
+	return v
 }
 
 func (v Video) AddExtension(ext string) Video {
@@ -226,7 +238,7 @@ func (v Video) AddVariable() Video {
 	return v
 }
 
-func (v Video) RequestVideo(delivery string, config config.Config) ([]byte, error) {
+func (v Video) RequestVideo(delivery string) ([]byte, error) {
 	err := validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err
