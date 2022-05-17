@@ -13,8 +13,7 @@ type request interface {
 	RequestMedia(string) []byte
 }
 
-func (r Request) RequestMedia(url string) []byte {
-	client := &http.Client{}
+func (r Request) RequestMedia(client *http.Client, url string) []byte {
 	var res []byte
 
 	request, _ := http.NewRequest(http.MethodGet, url, nil)

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/syke99/cloudinary/assets/image"
 	"github.com/syke99/cloudinary/assets/video"
+	"net/http"
 
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/resources"
@@ -11,6 +12,7 @@ import (
 )
 
 type Cloudinary struct {
+	client *http.Client
 	config config.Config
 	cloudinary
 }
@@ -32,13 +34,14 @@ type cloudinary interface {
 //}
 
 // NewSignedCloudinary creates a new instance for signed interactions with the Cloudinary API
-func NewSignedCloudinary(cloud string, key string, secret string) *Cloudinary {
+func NewSignedCloudinary(client *http.Client, cloud string, key string, secret string) *Cloudinary {
 	conf := config.Config{
 		Cloud:     cloud,
 		ApiKey:    key,
 		ApiSecret: secret,
 	}
 	return &Cloudinary{
+		client: client,
 		config: conf,
 	}
 }

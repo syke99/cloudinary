@@ -8,10 +8,14 @@ import (
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/validator"
 	"github.com/syke99/cloudinary/transformer"
+	"net/http"
 	"reflect"
+	"strconv"
+	"time"
 )
 
 type Image struct {
+	client          *http.Client
 	validator       validator.Validator
 	config          config.Config
 	Transformer     transformer.Transformer
@@ -24,7 +28,7 @@ type Image struct {
 }
 
 type image interface {
-	NewImage(string, string, string, transformer.Transformer, config.Config) Image
+	NewImage(*http.Client, string, string, string, transformer.Transformer, config.Config) Image
 	AddExtension(string) Image
 	AddAngle(transformer.Angle) Image
 	AddAspectRatio(transformer.AspectRatio) Image
@@ -60,7 +64,8 @@ type image interface {
 	UploadImage(upload.UploaderParameters, string) (interface{}, error)
 }
 
-func (i Image) NewImage(name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Image {
+func (i Image) NewImage(client *http.Client, name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Image {
+	i.client = client
 	i.config = config
 	i.Transformer = transformer
 	i.transformations = []string{}
@@ -236,7 +241,7 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 
 	r := request.Request{}
 	reqUrl := fmt.Sprintf("%s/%s/%s/%s", i.ReqUrl, delivery, i.Name, i.Ext)
-	return r.RequestMedia(reqUrl), nil
+	return r.RequestMedia(i.client, reqUrl), nil
 }
 
 func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) (interface{}, error) {
@@ -247,15 +252,12 @@ func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) (int
 	for _, transformation := range i.transformations {
 		params.Transformation += transformation
 	}
+	params.TimeStampUnix = strconv.FormatInt(time.Now().Unix(), 10)
 	u := upload.Uploader{}
 
 	sortedParams := u.SortUploadParameters(params)
 
 	signature := u.GenerateSignature(sortedParams, apiKey)
 
-	// just a placeholder, will be removed once u.UploadMedia
-	// is updated with correct call to Cloudinary API
-	println(signature)
-
-	return u.UploadMedia(params), nil
+	return u.UploadMedia(i.client, params, apiKey, signature, i.UploadUrl), nil
 }
