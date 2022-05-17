@@ -2,6 +2,7 @@ package upload
 
 import (
 	"crypto/sha1"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -254,7 +255,16 @@ func (u Uploader) UploadMedia(client *http.Client, params UploaderParameters, ap
 		fieldName = strings.ToLower(fieldName)
 
 		if fieldName == "file" {
-			// handle either a []byte or base64-encoded file
+			if prms.Type().Field(i).Type.String() == "[]byte" {
+				encodedFile := base64.StdEncoding.EncodeToString(prms.Field(i).Interface().([]byte))
+				formData.Add("file", encodedFile)
+				// so that we don't add a second "file" key/value
+				// pair, continue through to the next iteration
+				continue
+			}
+
+			fieldValue := prms.Field(i).Interface().(string)
+			formData.Add("file", fieldValue)
 		}
 
 		if fieldName == "access_control" ||
