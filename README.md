@@ -42,8 +42,8 @@ Connect to the Cloudinary API and perform actions on assets
 client := *http.Client
 cloud := cloudinary.NewSignedCloudinary(client, <cloud_name>, <api_key>, <api_secret>)
 
-// Call Image() or Video() to declare which type of asset you wish to work with, along with the name that you 
-// want your image to be saved as in your cloud account (no file extension needed)
+// Call Image() or Video() to declare which type of asset you wish to work with, along with the name that
+// you want your image to be saved as in your cloud account (no file extension needed)
 img := cloud.Image("test_image")
 
 // Create some transformations (they can be reused across multiple assets)
