@@ -12,7 +12,7 @@ type ColorSpace struct {
 	Mode string
 }
 
-func NewColorSpace(mode string, publicId string) (ColorSpace, error) {
+func NewColorSpace(validator validator.Validator, mode string, publicId string) (ColorSpace, error) {
 	err := validator.ValidateColorSpaceMode(mode)
 	if err != nil {
 		return ColorSpace{}, err

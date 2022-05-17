@@ -6,13 +6,13 @@ import (
 	"github.com/syke99/cloudinary/api/upload"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/validator"
+	"github.com/syke99/cloudinary/transformer"
 	"net/http"
 	"reflect"
 	"strconv"
 	"time"
 
 	"github.com/syke99/cloudinary/config"
-	"github.com/syke99/cloudinary/transformer"
 )
 
 type Video struct {

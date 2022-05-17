@@ -8,7 +8,7 @@ type AudioCodec struct {
 	CodecValue string
 }
 
-func NewAudioCodec(codec string) (AudioCodec, error) {
+func NewAudioCodec(validator validator.Validator, codec string) (AudioCodec, error) {
 	err := validator.ValidateAudioCodec(codec)
 	if err != nil {
 		return AudioCodec{}, err

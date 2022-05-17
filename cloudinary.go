@@ -4,16 +4,18 @@ import (
 	"fmt"
 	"github.com/syke99/cloudinary/assets/image"
 	"github.com/syke99/cloudinary/assets/video"
+	"github.com/syke99/cloudinary/internal/validator"
+	"github.com/syke99/cloudinary/transformer"
 	"net/http"
 
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/resources"
-	"github.com/syke99/cloudinary/transformer"
 )
 
 type Cloudinary struct {
-	client *http.Client
-	config config.Config
+	client    *http.Client
+	config    config.Config
+	validator validator.Validator
 	cloudinary
 }
 
@@ -40,9 +42,11 @@ func NewSignedCloudinary(client *http.Client, cloud string, key string, secret s
 		ApiKey:    key,
 		ApiSecret: secret,
 	}
+	validator := validator.Validator{}
 	return &Cloudinary{
-		client: client,
-		config: conf,
+		client:    client,
+		config:    conf,
+		validator: validator,
 	}
 }
 

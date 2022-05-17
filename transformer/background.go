@@ -22,7 +22,7 @@ type BackgroundBlurred struct {
 	Brightness uint
 }
 
-func NewBackgroundAuto(mode string, number int, direction string, colors []string) (BackgroundAuto, error) {
+func NewBackgroundAuto(validator validator.Validator, mode string, number int, direction string, colors []string) (BackgroundAuto, error) {
 	var err error
 	err = validator.ValidateBackgroundAutoMode(mode)
 	if err != nil {

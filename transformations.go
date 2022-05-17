@@ -1,9 +1,11 @@
 package cloudinary
 
-import "github.com/syke99/cloudinary/transformer"
+import (
+	"github.com/syke99/cloudinary/transformer"
+)
 
 func (c Cloudinary) NewAngle(degrees int, mode string) (transformer.Angle, error) {
-	transformation, err := transformer.NewAngle(degrees, mode)
+	transformation, err := transformer.NewAngle(c.validator, degrees, mode)
 
 	if err != nil {
 		return transformer.Angle{}, err
@@ -19,7 +21,7 @@ func (c Cloudinary) NewAspectRatio(width float32, height float32) transformer.As
 }
 
 func (c Cloudinary) NewAudioCodec(codec string) (transformer.AudioCodec, error) {
-	transformation, err := transformer.NewAudioCodec(codec)
+	transformation, err := transformer.NewAudioCodec(c.validator, codec)
 
 	if err != nil {
 		return transformer.AudioCodec{}, err
@@ -33,7 +35,7 @@ func (c Cloudinary) NewAudioFrequency(frequency string, iaf bool) transformer.Au
 }
 
 func (c Cloudinary) NewBackgroundAuto(mode string, number int, direction string, colors []string) (transformer.BackgroundAuto, error) {
-	transformation, err := transformer.NewBackgroundAuto(mode, number, direction, colors)
+	transformation, err := transformer.NewBackgroundAuto(c.validator, mode, number, direction, colors)
 	if err != nil {
 		return transformer.BackgroundAuto{}, err
 	}
@@ -62,7 +64,7 @@ func (c Cloudinary) NewColor(color string) transformer.Color {
 }
 
 func (c Cloudinary) NewColorSpace(mode string, publicId string) (transformer.ColorSpace, error) {
-	transformation, err := transformer.NewColorSpace(mode, publicId)
+	transformation, err := transformer.NewColorSpace(c.validator, mode, publicId)
 	if err != nil {
 		return transformer.ColorSpace{}, err
 	}
@@ -71,7 +73,7 @@ func (c Cloudinary) NewColorSpace(mode string, publicId string) (transformer.Col
 }
 
 func (c Cloudinary) NewCustomFunction(functionType string, source string) (transformer.CustomFunction, error) {
-	transformation, err := transformer.NewCustomFunction(functionType, source)
+	transformation, err := transformer.NewCustomFunction(c.validator, functionType, source)
 	if err != nil {
 		return transformer.CustomFunction{}, err
 	}

@@ -9,7 +9,7 @@ type CustomFunction struct {
 	Source       string
 }
 
-func NewCustomFunction(functionType string, source string) (CustomFunction, error) {
+func NewCustomFunction(validator validator.Validator, functionType string, source string) (CustomFunction, error) {
 	err := validator.ValidateFunctionType(functionType)
 	if err != nil {
 		return CustomFunction{}, err
