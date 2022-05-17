@@ -74,7 +74,7 @@ response, err := img.AddAngle(angle).AddColor(blue).RequestImage(resources.Uploa
 ```
 
 
-With this workflow, it's much simpler and quicker for developers to interact with Cloudinary's API by making reading, writing, and maintaining their interactions with the API at a glance. It also allows
+With this workflow, it's much simpler and quicker for developers to interact with Cloudinary's API by making reading, writing, and maintaining their interactions with the API at a glance a breeze. It also allows
 for transformations, upload parameters, and more to be reused across multiple assets without having to either having to retype strings to be used in multiple places, or creating their own custom structs and
 interfaces.
 
