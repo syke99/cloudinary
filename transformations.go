@@ -1,7 +1,7 @@
 package cloudinary
 
 import (
-	"github.com/syke99/cloudinary/transformer"
+	"github.com/syke99/cloudinary/internal/transformer"
 )
 
 func (c Cloudinary) NewAngle(degrees int, mode string) (transformer.Angle, error) {

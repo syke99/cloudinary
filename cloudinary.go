@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/syke99/cloudinary/assets/image"
 	"github.com/syke99/cloudinary/assets/video"
+	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/transformer"
 	"net/http"
 
 	"github.com/syke99/cloudinary/config"

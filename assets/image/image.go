@@ -6,8 +6,8 @@ import (
 	"github.com/syke99/cloudinary/api/upload"
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
+	transformer2 "github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/transformer"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -18,7 +18,7 @@ type Image struct {
 	client          *http.Client
 	validator       validator.Validator
 	config          config.Config
-	Transformer     transformer.Transformer
+	Transformer     transformer2.Transformer
 	transformations []string
 	Name            string
 	Ext             string
@@ -28,20 +28,20 @@ type Image struct {
 }
 
 type image interface {
-	NewImage(*http.Client, string, string, string, transformer.Transformer, config.Config) Image
+	NewImage(*http.Client, string, string, string, transformer2.Transformer, config.Config) Image
 	AddExtension(string) Image
-	AddAngle(transformer.Angle) Image
-	AddAspectRatio(transformer.AspectRatio) Image
-	AddBackground(transformer.Background) Image
-	AddBorder(transformer.Border) Image
-	AddCropOrResize(transformer.CropResize) Image
-	AddColor(transformer.Color) Image
-	AddColorSpace(transformer.ColorSpace) Image
-	AddDefaultImage(transformer.DefaultImage) Image
-	AddDelay(transformer.Delay) Image
-	AddDensity(transformer.Density) Image
-	AddDPR(transformer.DPR) Image
-	AddEffect(transformer.Effect) Image
+	AddAngle(transformer2.Angle) Image
+	AddAspectRatio(transformer2.AspectRatio) Image
+	AddBackground(transformer2.Background) Image
+	AddBorder(transformer2.Border) Image
+	AddCropOrResize(transformer2.CropResize) Image
+	AddColor(transformer2.Color) Image
+	AddColorSpace(transformer2.ColorSpace) Image
+	AddDefaultImage(transformer2.DefaultImage) Image
+	AddDelay(transformer2.Delay) Image
+	AddDensity(transformer2.Density) Image
+	AddDPR(transformer2.DPR) Image
+	AddEffect(transformer2.Effect) Image
 	AddFormat() Image
 	AddFlag() Image
 	AddCustomFunction() Image
@@ -64,7 +64,7 @@ type image interface {
 	UploadImage(upload.UploaderParameters, string) (interface{}, error)
 }
 
-func (i Image) NewImage(client *http.Client, name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Image {
+func (i Image) NewImage(client *http.Client, name string, reqUrl string, uploadUrl string, transformer transformer2.Transformer, config config.Config) Image {
 	i.client = client
 	i.config = config
 	i.Transformer = transformer
@@ -83,62 +83,62 @@ func (i Image) AddExtension(ext string) Image {
 	return i
 }
 
-func (i Image) AddAngle(angle transformer.Angle) Image {
+func (i Image) AddAngle(angle transformer2.Angle) Image {
 	i.transformations = i.Transformer.AddAngle(i.transformations, angle)
 	return i
 }
 
-func (i Image) AddAspectRatio(ar transformer.AspectRatio) Image {
+func (i Image) AddAspectRatio(ar transformer2.AspectRatio) Image {
 	i.transformations = i.Transformer.AddAspectRatio(i.transformations, ar)
 	return i
 }
 
-func (i Image) AddBackground(background transformer.Background) Image {
+func (i Image) AddBackground(background transformer2.Background) Image {
 	i.transformations = i.Transformer.AddBackground(i.transformations, background)
 	return i
 }
 
-func (i Image) AddBorder(border transformer.Border) Image {
+func (i Image) AddBorder(border transformer2.Border) Image {
 	i.transformations = i.Transformer.AddBorder(i.transformations, border)
 	return i
 }
 
-func (i Image) AddCropOrResize(resize transformer.CropResize) Image {
+func (i Image) AddCropOrResize(resize transformer2.CropResize) Image {
 	i.transformations = i.Transformer.AddCropOrResize(i.transformations, resize)
 	return i
 }
 
-func (i Image) AddColor(color transformer.Color) Image {
+func (i Image) AddColor(color transformer2.Color) Image {
 	i.transformations = i.Transformer.AddColor(i.transformations, color)
 	return i
 }
 
-func (i Image) AddColorSpace(space transformer.ColorSpace) Image {
+func (i Image) AddColorSpace(space transformer2.ColorSpace) Image {
 	i.transformations = i.Transformer.AddColorSpace(i.transformations, space)
 	return i
 }
 
-func (i Image) AddDefaultImage(defaultImage transformer.DefaultImage) Image {
+func (i Image) AddDefaultImage(defaultImage transformer2.DefaultImage) Image {
 	i.transformations = i.Transformer.AddDefaultImage(i.transformations, defaultImage)
 	return i
 }
 
-func (i Image) AddDelay(delay transformer.Delay) Image {
+func (i Image) AddDelay(delay transformer2.Delay) Image {
 	i.transformations = i.Transformer.AddDelay(i.transformations, delay)
 	return i
 }
 
-func (i Image) AddDensity(density transformer.Density) Image {
+func (i Image) AddDensity(density transformer2.Density) Image {
 	i.transformations = i.Transformer.AddDensity(i.transformations, density)
 	return i
 }
 
-func (i Image) AddDPR(dpr transformer.DPR) Image {
+func (i Image) AddDPR(dpr transformer2.DPR) Image {
 	i.transformations = i.Transformer.AddDPR(i.transformations, dpr)
 	return i
 }
 
-func (i Image) AddEffect(effect transformer.Effect) Image {
+func (i Image) AddEffect(effect transformer2.Effect) Image {
 	i.transformations = i.Transformer.AddEffect(i.transformations, effect)
 	return i
 }
