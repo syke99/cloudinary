@@ -7,6 +7,7 @@ import (
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
+	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
 	"net/http"
 	"reflect"
@@ -30,19 +31,19 @@ type Video struct {
 type video interface {
 	ConfigureVideo(config.MediaConfig) Video
 	AddExtension(string) Video
-	AddAngle(transformer.Angle) Video
-	AddAudioCodec(transformer.AudioCodec) Video
-	AddAudioFrequency(transformer.AudioFrequency) Video
-	AddBackground(transformer.Background) Video
-	AddBorder(transformer.Border) Video
-	AddBitrate(transformer.BitRate) Video
-	AddCropOrResize(transformer.CropResize) Video
-	AddColor(transformer.Color) Video
-	AddColorSpace(transformer.ColorSpace) Video
-	AddDelay(transformer.Delay) Video
-	AddDPR(transformer.DPR) Video
-	AddDuration(transformer.Duration) Video
-	AddEffect(transformer.Effect) Video
+	AddAngle(transformations.Angle) Video
+	AddAudioCodec(transformations.AudioCodec) Video
+	AddAudioFrequency(transformations.AudioFrequency) Video
+	AddBackground(transformations.Background) Video
+	AddBorder(transformations.Border) Video
+	AddBitrate(transformations.BitRate) Video
+	AddCropOrResize(transformations.CropResize) Video
+	AddColor(transformations.Color) Video
+	AddColorSpace(transformations.ColorSpace) Video
+	AddDelay(transformations.Delay) Video
+	AddDPR(transformations.DPR) Video
+	AddDuration(transformations.Duration) Video
+	AddEffect(transformations.Effect) Video
 	AddEndOffset() Video
 	AddFormat() Video
 	AddFlag() Video
@@ -86,67 +87,67 @@ func (v Video) AddExtension(ext string) Video {
 	return v
 }
 
-func (v Video) AddAngle(angle transformer.Angle) Video {
+func (v Video) AddAngle(angle transformations.Angle) Video {
 	v.transformations = v.transformer.AddAngle(v.transformations, angle)
 	return v
 }
 
-func (v Video) AddAudioCodec(ac transformer.AudioCodec) Video {
+func (v Video) AddAudioCodec(ac transformations.AudioCodec) Video {
 	v.transformations = v.transformer.AddAudioCodec(v.transformations, ac)
 	return v
 }
 
-func (v Video) AddAudioFrequency(af transformer.AudioFrequency) Video {
+func (v Video) AddAudioFrequency(af transformations.AudioFrequency) Video {
 	v.transformations = v.transformer.AddAudioFrequency(v.transformations, af)
 	return v
 }
 
-func (v Video) AddBackground(background transformer.Background) Video {
+func (v Video) AddBackground(background transformations.Background) Video {
 	v.transformations = v.transformer.AddBackground(v.transformations, background)
 	return v
 }
 
-func (v Video) AddBorder(border transformer.Border) Video {
+func (v Video) AddBorder(border transformations.Border) Video {
 	v.transformations = v.transformer.AddBorder(v.transformations, border)
 	return v
 }
 
-func (v Video) AddBitrate(br transformer.BitRate) Video {
+func (v Video) AddBitrate(br transformations.BitRate) Video {
 	v.transformations = v.transformer.AddBitrate(v.transformations, br)
 	return v
 }
 
-func (v Video) AddCropOrResize(cr transformer.CropResize) Video {
+func (v Video) AddCropOrResize(cr transformations.CropResize) Video {
 	v.transformations = v.transformer.AddCropOrResize(v.transformations, cr)
 	return v
 }
 
-func (v Video) AddColor(color transformer.Color) Video {
+func (v Video) AddColor(color transformations.Color) Video {
 	v.transformations = v.transformer.AddColor(v.transformations, color)
 	return v
 }
 
-func (v Video) AddColorSpace(colorSpace transformer.ColorSpace) Video {
+func (v Video) AddColorSpace(colorSpace transformations.ColorSpace) Video {
 	v.transformations = v.transformer.AddColorSpace(v.transformations, colorSpace)
 	return v
 }
 
-func (v Video) AddDelay(delay transformer.Delay) Video {
+func (v Video) AddDelay(delay transformations.Delay) Video {
 	v.transformations = v.transformer.AddDelay(v.transformations, delay)
 	return v
 }
 
-func (v Video) AddDPR(dpr transformer.DPR) Video {
+func (v Video) AddDPR(dpr transformations.DPR) Video {
 	v.transformations = v.transformer.AddDPR(v.transformations, dpr)
 	return v
 }
 
-func (v Video) AddDuration(duration transformer.Duration) Video {
+func (v Video) AddDuration(duration transformations.Duration) Video {
 	v.transformations = v.transformer.AddDuration(v.transformations, duration)
 	return v
 }
 
-func (v Video) AddEffect(effect transformer.Effect) Video {
+func (v Video) AddEffect(effect transformations.Effect) Video {
 	v.transformations = v.transformer.AddEffect(v.transformations, effect)
 	return v
 }
