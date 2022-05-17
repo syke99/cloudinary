@@ -36,13 +36,14 @@ import "github.com/syke99/cloudinary"
 Connect to the Cloudinary API and perform actions on assets
 
 ```go
-// Initialize the Cloudinary instance by passing in an *http.Client, your Cloudinary cloud name, API Key, and API Secret
+// Initialize the Cloudinary instance by passing in an *http.Client, your Cloudinary cloud name,
+// API Key, and API Secret
 // *DON'T FORGET TO KEEP YOUR API KEY AND API SECRET HIDDEN (i.e. w/ environment variables)*
 client := *http.Client
 cloud := cloudinary.NewSignedCloudinary(client, <cloud_name>, <api_key>, <api_secret>)
 
-// Call Image() or Video() to declare which type of asset you wish to work with, along with the name that you want your image
-// to be saved as in your cloud account (no file extension needed)
+// Call Image() or Video() to declare which type of asset you wish to work with, along with the name that you 
+// want your image to be saved as in your cloud account (no file extension needed)
 img := cloud.Image("test_image")
 
 // Create some transformations (they can be reused across multiple assets)
