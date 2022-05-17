@@ -61,7 +61,7 @@ type image interface {
 	AddZoom() Image
 	AddVariable() Image
 	RequestImage(string) ([]byte, error)
-	UploadImage(upload.UploaderParameters, string) (interface{}, error)
+	UploadImage(upload.UploaderParameters) (interface{}, error)
 }
 
 func (i Image) NewImage(client *http.Client, name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Image {
@@ -244,7 +244,7 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 	return r.RequestMedia(i.client, reqUrl), nil
 }
 
-func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) (interface{}, error) {
+func (i Image) UploadImage(params upload.UploaderParameters) (interface{}, error) {
 	if reflect.ValueOf(params).Len() == 0 {
 		return nil, internal_resources.NoUploadParamsSupplied
 	}
@@ -257,7 +257,7 @@ func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) (int
 
 	sortedParams := u.SortUploadParameters(params)
 
-	signature := u.GenerateSignature(sortedParams, apiKey)
+	signature := u.GenerateSignature(sortedParams, i.config.ApiKey)
 
-	return u.UploadMedia(i.client, params, apiKey, signature, i.UploadUrl), nil
+	return u.UploadMedia(i.client, params, i.config.ApiKey, signature, i.UploadUrl), nil
 }

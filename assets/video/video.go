@@ -65,7 +65,7 @@ type video interface {
 	AddXY() Video
 	AddVariable() Video
 	RequestVideo(string) ([]byte, error)
-	UploadVideo(upload.UploaderParameters, string) (interface{}, error)
+	UploadVideo(upload.UploaderParameters) (interface{}, error)
 }
 
 func (v Video) NewVideo(client *http.Client, name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Video {
@@ -263,7 +263,7 @@ func (v Video) RequestVideo(delivery string) ([]byte, error) {
 	return r.RequestMedia(v.client, reqUrl), nil
 }
 
-func (v Video) UploadVideo(params upload.UploaderParameters, apiKey string) (interface{}, error) {
+func (v Video) UploadVideo(params upload.UploaderParameters) (interface{}, error) {
 	if reflect.ValueOf(params).Len() == 0 {
 		return nil, internal_resources.NoUploadParamsSupplied
 	}
@@ -276,7 +276,7 @@ func (v Video) UploadVideo(params upload.UploaderParameters, apiKey string) (int
 
 	sortedParams := u.SortUploadParameters(params)
 
-	signature := u.GenerateSignature(sortedParams, apiKey)
+	signature := u.GenerateSignature(sortedParams, v.config.ApiKey)
 
-	return u.UploadMedia(v.client, params, apiKey, signature, v.UploadUrl), nil
+	return u.UploadMedia(v.client, params, v.config.ApiKey, signature, v.UploadUrl), nil
 }
