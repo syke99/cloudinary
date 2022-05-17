@@ -57,7 +57,7 @@ type video interface {
 	AddXY() Video
 	AddVariable() Video
 	RequestVideo(string) ([]byte, error)
-	UploadVideo(upload.UploaderParameters) interface{}
+	UploadVideo(upload.UploaderParameters, string) interface{}
 }
 
 func (v Video) NewVideo(name string, url string, transformer transformer.Transformer, config config.Config) Video {
@@ -251,10 +251,19 @@ func (v Video) RequestVideo(delivery string) ([]byte, error) {
 	return r.RequestMedia(reqUrl), nil
 }
 
-func (v Video) UploadVideo(params upload.UploaderParameters) interface{} {
+func (v Video) UploadVideo(params upload.UploaderParameters, apiKey string) interface{} {
 	for _, transformation := range v.transformations {
 		params.Transformation += transformation
 	}
 	u := upload.Uploader{}
+
+	sortedParams := u.SortUploadParameters(params)
+
+	signature := u.GenerateSignature(sortedParams, apiKey)
+
+	// just a placeholder, will be removed once u.UploadMedia
+	// is updated with correct call to Cloudinary API
+	println(signature)
+
 	return u.UploadMedia(params)
 }

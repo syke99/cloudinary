@@ -2,11 +2,10 @@ package image
 
 import (
 	"fmt"
-	"github.com/syke99/cloudinary/upload"
-
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
 	"github.com/syke99/cloudinary/transformer"
+	"github.com/syke99/cloudinary/upload"
 	"github.com/syke99/cloudinary/validator"
 )
 
@@ -54,7 +53,7 @@ type image interface {
 	AddZoom() Image
 	AddVariable() Image
 	RequestImage(string) ([]byte, error)
-	UploadImage(parameters upload.UploaderParameters) interface{}
+	UploadImage(upload.UploaderParameters, string) interface{}
 }
 
 func (i Image) NewImage(name string, url string, transformer transformer.Transformer, config config.Config) Image {
@@ -234,10 +233,19 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 	return r.RequestMedia(reqUrl), nil
 }
 
-func (i Image) UploadImage(params upload.UploaderParameters) interface{} {
+func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) interface{} {
 	for _, transformation := range i.transformations {
 		params.Transformation += transformation
 	}
 	u := upload.Uploader{}
+
+	sortedParams := u.SortUploadParameters(params)
+
+	signature := u.GenerateSignature(sortedParams, apiKey)
+
+	// just a placeholder, will be removed once u.UploadMedia
+	// is updated with correct call to Cloudinary API
+	println(signature)
+
 	return u.UploadMedia(params)
 }

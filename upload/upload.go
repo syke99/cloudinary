@@ -1,5 +1,14 @@
 package upload
 
+import (
+	"crypto/sha1"
+	"encoding/hex"
+	"fmt"
+	"reflect"
+	"sort"
+	"strings"
+)
+
 type Uploader struct {
 	params UploaderParameters
 	uploader
@@ -100,10 +109,117 @@ type responseEager struct {
 }
 
 type uploader interface {
+	SortUploadParameters(UploaderParameters) []string
+	GenerateSignature([]string, string) string
 	UploadMedia(UploaderParameters) UploaderResponse
+}
+
+func (u Uploader) SortUploadParameters(params UploaderParameters) []string {
+
+	var sortedParams []string
+
+	prms := reflect.ValueOf(&params).Elem()
+
+	for i := 0; i < prms.NumField(); i++ {
+		fieldName := strings.ToLower(prms.Type().Field(i).Name)
+		if fieldName == "file" ||
+			fieldName == "timestampunix" {
+			continue
+		}
+
+		if fieldName == "accesscontrol" {
+			fieldValues := prms.Field(i).Interface().([]string)
+
+			fieldValues[0] = fmt.Sprintf("access_control=%s", fieldValues[0])
+
+			param := strings.Join(fieldValues, ", access_control=")
+
+			sortedParams = append(sortedParams, param)
+		}
+
+		if fieldName == "tags" {
+			fieldValues := prms.Field(i).Interface().([]string)
+
+			fieldValues[0] = fmt.Sprintf("tags=%s", fieldValues[0])
+
+			param := strings.Join(fieldValues, ", tags=")
+
+			sortedParams = append(sortedParams, param)
+		}
+
+		if fieldName == "context" {
+			fieldValues := prms.Field(i).Interface().([]string)
+
+			fieldValues[0] = fmt.Sprintf("context=%s", fieldValues[0])
+
+			param := strings.Join(fieldValues, ", context=")
+
+			sortedParams = append(sortedParams, param)
+		}
+
+		if fieldName == "metadata" {
+			fieldValues := prms.Field(i).Interface().([]string)
+
+			fieldValues[0] = fmt.Sprintf("metadata=%s", fieldValues[0])
+
+			param := strings.Join(fieldValues, ", metadata=")
+
+			sortedParams = append(sortedParams, param)
+		}
+
+		if fieldName == "responsivebreakpoints" {
+			fieldValues := prms.Field(i).Interface().([]string)
+
+			fieldValues[0] = fmt.Sprintf("responsive_breakpoints=%s", fieldValues[0])
+
+			param := strings.Join(fieldValues, ", responsive_breakpoints=")
+
+			sortedParams = append(sortedParams, param)
+		}
+
+		if fieldName == "timestampunix" {
+			fieldValues := prms.Field(i).Interface().([]string)
+
+			fieldValues[0] = fmt.Sprintf("timestamp=%s", fieldValues[0])
+
+			param := strings.Join(fieldValues, ", timestamp=")
+
+			sortedParams = append(sortedParams, param)
+		}
+
+		fieldValue := prms.Field(i).Interface().(string)
+
+		if fieldValue != "" {
+			fieldValue = fmt.Sprintf("%s=%s", fieldName, fieldValue)
+			sortedParams = append(sortedParams, fieldValue)
+		}
+	}
+
+	sort.Strings(sortedParams)
+
+	return sortedParams
+}
+
+func (u Uploader) GenerateSignature(sortedParams []string, apiKey string) string {
+	var encryptedSignature []byte
+
+	stringifiedParams := strings.Join(sortedParams, "&")
+
+	paramsWithKey := fmt.Sprintf("%s%s", stringifiedParams, apiKey)
+
+	hasher := sha1.New()
+
+	hasher.Write([]byte(paramsWithKey))
+
+	hasher.Sum(encryptedSignature)
+
+	encodedSignature := hex.EncodeToString(encryptedSignature)
+
+	return encodedSignature
 }
 
 func (u Uploader) UploadMedia(params UploaderParameters) UploaderResponse {
 	var resp UploaderResponse
+
 	return resp
 }

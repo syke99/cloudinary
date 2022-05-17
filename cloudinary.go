@@ -21,14 +21,15 @@ type cloudinary interface {
 }
 
 // NewUnsignedCloudinary creates a new instance for unsigned interactions with the Cloudinary API
-func NewUnsignedCloudinary(cloud string) *Cloudinary {
-	conf := config.Config{
-		Cloud: cloud,
-	}
-	return &Cloudinary{
-		config: conf,
-	}
-}
+// Unsigned interactions currently not supported
+//func NewUnsignedCloudinary(cloud string) *Cloudinary {
+//	conf := config.Config{
+//		Cloud: cloud,
+//	}
+//	return &Cloudinary{
+//		config: conf,
+//	}
+//}
 
 // NewSignedCloudinary creates a new instance for signed interactions with the Cloudinary API
 func NewSignedCloudinary(cloud string, key string, secret string) *Cloudinary {
