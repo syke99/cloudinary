@@ -13,9 +13,10 @@ import (
 )
 
 type Cloudinary struct {
-	client    *http.Client
-	config    config.Config
-	validator validator.Validator
+	client      *http.Client
+	config      config.Config
+	validator   validator.Validator
+	transformer transformer.Transformer
 	cloudinary
 }
 
@@ -43,10 +44,12 @@ func NewSignedCloudinary(client *http.Client, cloud string, key string, secret s
 		ApiSecret: secret,
 	}
 	validator := validator.Validator{}
+	transformer := transformer.Transformer{}
 	return &Cloudinary{
-		client:    client,
-		config:    conf,
-		validator: validator,
+		client:      client,
+		config:      conf,
+		validator:   validator,
+		transformer: transformer,
 	}
 }
 
@@ -54,12 +57,12 @@ func (c Cloudinary) Image(name string) image.Image {
 	reqUrl := fmt.Sprintf("%s/%s/image/", resources.BaseUrl, c.config.Cloud)
 	uploadUrl := fmt.Sprintf("%s/v1_1/%s/image/", resources.BaseUrl, c.config.Cloud)
 
-	return image.Image{}.NewImage(c.client, name, reqUrl, uploadUrl, transformer.Transformer{}, c.config)
+	return image.Image{Transformer: c.transformer}.NewImage(c.client, c.config, name, reqUrl, uploadUrl)
 }
 
 func (c Cloudinary) Video(name string) video.Video {
 	reqUrl := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.config.Cloud)
 	uploadUrl := fmt.Sprintf("%s/v1_1/%s/image/", resources.BaseUrl, c.config.Cloud)
 
-	return video.Video{}.NewVideo(c.client, name, reqUrl, uploadUrl, transformer.Transformer{}, c.config)
+	return video.Video{Transformer: c.transformer}.NewVideo(c.client, c.config, name, reqUrl, uploadUrl)
 }

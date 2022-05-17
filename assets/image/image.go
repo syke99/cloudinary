@@ -6,7 +6,7 @@ import (
 	"github.com/syke99/cloudinary/api/upload"
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
-	transformer "github.com/syke99/cloudinary/internal/transformer"
+	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
 	"net/http"
 	"reflect"
@@ -28,7 +28,7 @@ type Image struct {
 }
 
 type image interface {
-	NewImage(*http.Client, string, string, string, transformer.Transformer, config.Config) Image
+	NewImage(*http.Client, config.Config, string, string, string) Image
 	AddExtension(string) Image
 	AddAngle(transformer.Angle) Image
 	AddAspectRatio(transformer.AspectRatio) Image
@@ -64,10 +64,9 @@ type image interface {
 	UploadImage(upload.UploaderParameters) (interface{}, error)
 }
 
-func (i Image) NewImage(client *http.Client, name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Image {
+func (i Image) NewImage(client *http.Client, config config.Config, name string, reqUrl string, uploadUrl string) Image {
 	i.client = client
 	i.config = config
-	i.Transformer = transformer
 	i.transformations = []string{}
 	i.Name = name
 	i.Ext = ""

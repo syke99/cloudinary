@@ -5,7 +5,7 @@ import (
 	"github.com/syke99/cloudinary/api/request"
 	"github.com/syke99/cloudinary/api/upload"
 	"github.com/syke99/cloudinary/internal/internal_resources"
-	transformer "github.com/syke99/cloudinary/internal/transformer"
+	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
 	"net/http"
 	"reflect"
@@ -29,7 +29,7 @@ type Video struct {
 }
 
 type video interface {
-	NewVideo(*http.Client, string, string, string, transformer.Transformer, config.Config) Video
+	NewVideo(*http.Client, config.Config, string, string, string) Video
 	AddExtension(string) Video
 	AddAngle(transformer.Angle) Video
 	AddAudioCodec(transformer.AudioCodec) Video
@@ -68,10 +68,9 @@ type video interface {
 	UploadVideo(upload.UploaderParameters) (interface{}, error)
 }
 
-func (v Video) NewVideo(client *http.Client, name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Video {
+func (v Video) NewVideo(client *http.Client, config config.Config, name string, reqUrl string, uploadUrl string) Video {
 	v.client = client
 	v.config = config
-	v.Transformer = transformer
 	v.transformations = []string{}
 	v.Name = name
 	v.Ext = ""
