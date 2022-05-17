@@ -2,7 +2,9 @@ package video
 
 import (
 	"fmt"
+	"github.com/syke99/cloudinary/resources"
 	"github.com/syke99/cloudinary/upload"
+	"reflect"
 
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
@@ -251,7 +253,11 @@ func (v Video) RequestVideo(delivery string) ([]byte, error) {
 	return r.RequestMedia(reqUrl), nil
 }
 
-func (v Video) UploadVideo(params upload.UploaderParameters, apiKey string) interface{} {
+func (v Video) UploadVideo(params upload.UploaderParameters, apiKey string) (interface{}, error) {
+	if reflect.ValueOf(params).Len() == 0 {
+		return nil, resources.NoUploadParamsSupplied
+	}
+
 	for _, transformation := range v.transformations {
 		params.Transformation += transformation
 	}
@@ -265,5 +271,5 @@ func (v Video) UploadVideo(params upload.UploaderParameters, apiKey string) inte
 	// is updated with correct call to Cloudinary API
 	println(signature)
 
-	return u.UploadMedia(params)
+	return u.UploadMedia(params), nil
 }

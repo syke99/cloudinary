@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
+	"github.com/syke99/cloudinary/resources"
 	"github.com/syke99/cloudinary/transformer"
 	"github.com/syke99/cloudinary/upload"
 	"github.com/syke99/cloudinary/validator"
+	"reflect"
 )
 
 type Image struct {
@@ -233,7 +235,11 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 	return r.RequestMedia(reqUrl), nil
 }
 
-func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) interface{} {
+func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) (interface{}, error) {
+	if reflect.ValueOf(params).Len() == 0 {
+		return nil, resources.NoUploadParamsSupplied
+	}
+
 	for _, transformation := range i.transformations {
 		params.Transformation += transformation
 	}
@@ -247,5 +253,5 @@ func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) inte
 	// is updated with correct call to Cloudinary API
 	println(signature)
 
-	return u.UploadMedia(params)
+	return u.UploadMedia(params), nil
 }
