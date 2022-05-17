@@ -2,6 +2,7 @@ package image
 
 import (
 	"fmt"
+	"github.com/syke99/cloudinary/upload"
 
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
@@ -53,6 +54,7 @@ type image interface {
 	AddZoom() Image
 	AddVariable() Image
 	RequestImage(string) ([]byte, error)
+	UploadImage(parameters upload.UploaderParameters) interface{}
 }
 
 func (i Image) NewImage(name string, url string, transformer transformer.Transformer, config config.Config) Image {
@@ -230,4 +232,12 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 	r := request.Request{}
 	reqUrl := fmt.Sprintf("%s/%s/%s/%s", i.Url, delivery, i.Name, i.Ext)
 	return r.RequestMedia(reqUrl), nil
+}
+
+func (i Image) UploadImage(params upload.UploaderParameters) interface{} {
+	for _, transformation := range i.transformations {
+		params.Transformation += transformation
+	}
+	u := upload.Uploader{}
+	return u.UploadMedia(params)
 }

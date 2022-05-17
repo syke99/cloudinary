@@ -2,6 +2,7 @@ package video
 
 import (
 	"fmt"
+	"github.com/syke99/cloudinary/upload"
 
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
@@ -12,7 +13,7 @@ import (
 type Video struct {
 	config          config.Config
 	Transformer     transformer.Transformer
-	Transformations []string
+	transformations []string
 	Name            string
 	Ext             string
 	Url             string
@@ -56,12 +57,13 @@ type video interface {
 	AddXY() Video
 	AddVariable() Video
 	RequestVideo(string) ([]byte, error)
+	UploadVideo(upload.UploaderParameters) interface{}
 }
 
 func (v Video) NewVideo(name string, url string, transformer transformer.Transformer, config config.Config) Video {
 	v.config = config
 	v.Transformer = transformer
-	v.Transformations = []string{}
+	v.transformations = []string{}
 	v.Name = name
 	v.Ext = ""
 	v.Url = url
@@ -69,172 +71,172 @@ func (v Video) NewVideo(name string, url string, transformer transformer.Transfo
 }
 
 func (v Video) AddExtension(ext string) Video {
-	v.Transformations = v.Transformer.AddExtension(v.Transformations, ext)
+	v.transformations = v.Transformer.AddExtension(v.transformations, ext)
 	return v
 }
 
 func (v Video) AddAngle(angle transformer.Angle) Video {
-	v.Transformations = v.Transformer.AddAngle(v.Transformations, angle)
+	v.transformations = v.Transformer.AddAngle(v.transformations, angle)
 	return v
 }
 
 func (v Video) AddAudioCodec(ac transformer.AudioCodec) Video {
-	v.Transformations = v.Transformer.AddAudioCodec(v.Transformations, ac)
+	v.transformations = v.Transformer.AddAudioCodec(v.transformations, ac)
 	return v
 }
 
 func (v Video) AddAudioFrequency(af transformer.AudioFrequency) Video {
-	v.Transformations = v.Transformer.AddAudioFrequency(v.Transformations, af)
+	v.transformations = v.Transformer.AddAudioFrequency(v.transformations, af)
 	return v
 }
 
 func (v Video) AddBackground(background transformer.Background) Video {
-	v.Transformations = v.Transformer.AddBackground(v.Transformations, background)
+	v.transformations = v.Transformer.AddBackground(v.transformations, background)
 	return v
 }
 
 func (v Video) AddBorder(border transformer.Border) Video {
-	v.Transformations = v.Transformer.AddBorder(v.Transformations, border)
+	v.transformations = v.Transformer.AddBorder(v.transformations, border)
 	return v
 }
 
 func (v Video) AddBitrate(br transformer.BitRate) Video {
-	v.Transformations = v.Transformer.AddBitrate(v.Transformations, br)
+	v.transformations = v.Transformer.AddBitrate(v.transformations, br)
 	return v
 }
 
 func (v Video) AddCropOrResize(cr transformer.CropResize) Video {
-	v.Transformations = v.Transformer.AddCropOrResize(v.Transformations, cr)
+	v.transformations = v.Transformer.AddCropOrResize(v.transformations, cr)
 	return v
 }
 
 func (v Video) AddColor(color transformer.Color) Video {
-	v.Transformations = v.Transformer.AddColor(v.Transformations, color)
+	v.transformations = v.Transformer.AddColor(v.transformations, color)
 	return v
 }
 
 func (v Video) AddColorSpace(colorSpace transformer.ColorSpace) Video {
-	v.Transformations = v.Transformer.AddColorSpace(v.Transformations, colorSpace)
+	v.transformations = v.Transformer.AddColorSpace(v.transformations, colorSpace)
 	return v
 }
 
 func (v Video) AddDelay(delay transformer.Delay) Video {
-	v.Transformations = v.Transformer.AddDelay(v.Transformations, delay)
+	v.transformations = v.Transformer.AddDelay(v.transformations, delay)
 	return v
 }
 
 func (v Video) AddDPR(dpr transformer.DPR) Video {
-	v.Transformations = v.Transformer.AddDPR(v.Transformations, dpr)
+	v.transformations = v.Transformer.AddDPR(v.transformations, dpr)
 	return v
 }
 
 func (v Video) AddDuration(duration transformer.Duration) Video {
-	v.Transformations = v.Transformer.AddDuration(v.Transformations, duration)
+	v.transformations = v.Transformer.AddDuration(v.transformations, duration)
 	return v
 }
 
 func (v Video) AddEffect(effect transformer.Effect) Video {
-	v.Transformations = v.Transformer.AddEffect(v.Transformations, effect)
+	v.transformations = v.Transformer.AddEffect(v.transformations, effect)
 	return v
 }
 
 func (v Video) AddEndOffset() Video {
-	v.Transformations = v.Transformer.AddEndOffset(v.Transformations)
+	v.transformations = v.Transformer.AddEndOffset(v.transformations)
 	return v
 }
 
 func (v Video) AddFormat() Video {
-	v.Transformations = v.Transformer.AddFormat(v.Transformations)
+	v.transformations = v.Transformer.AddFormat(v.transformations)
 	return v
 }
 
 func (v Video) AddFlag() Video {
-	v.Transformations = v.Transformer.AddFlag(v.Transformations)
+	v.transformations = v.Transformer.AddFlag(v.transformations)
 	return v
 }
 
 func (v Video) AddFPS() Video {
-	v.Transformations = v.Transformer.AddFPS(v.Transformations)
+	v.transformations = v.Transformer.AddFPS(v.transformations)
 	return v
 }
 
 func (v Video) AddGravity() Video {
-	v.Transformations = v.Transformer.AddGravity(v.Transformations)
+	v.transformations = v.Transformer.AddGravity(v.transformations)
 	return v
 }
 
 func (v Video) AddHeight() Video {
-	v.Transformations = v.Transformer.AddHeight(v.Transformations)
+	v.transformations = v.Transformer.AddHeight(v.transformations)
 	return v
 }
 
 func (v Video) AddIf() Video {
-	v.Transformations = v.Transformer.AddIf(v.Transformations)
+	v.transformations = v.Transformer.AddIf(v.transformations)
 	return v
 }
 
 func (v Video) AddKeyframeInterval() Video {
-	v.Transformations = v.Transformer.AddKeyframeInterval(v.Transformations)
+	v.transformations = v.Transformer.AddKeyframeInterval(v.transformations)
 	return v
 }
 
 func (v Video) AddLayer() Video {
-	v.Transformations = v.Transformer.AddLayer(v.Transformations)
+	v.transformations = v.Transformer.AddLayer(v.transformations)
 	return v
 }
 
 func (v Video) AddQuality() Video {
-	v.Transformations = v.Transformer.AddQuality(v.Transformations)
+	v.transformations = v.Transformer.AddQuality(v.transformations)
 	return v
 }
 
 func (v Video) AddRoundCorners() Video {
-	v.Transformations = v.Transformer.AddRoundCorners(v.Transformations)
+	v.transformations = v.Transformer.AddRoundCorners(v.transformations)
 	return v
 }
 
 func (v Video) AddStartOffset() Video {
-	v.Transformations = v.Transformer.AddStartOffset(v.Transformations)
+	v.transformations = v.Transformer.AddStartOffset(v.transformations)
 	return v
 }
 
 func (v Video) AddStreamingProfile() Video {
-	v.Transformations = v.Transformer.AddStreamingProfile(v.Transformations)
+	v.transformations = v.Transformer.AddStreamingProfile(v.transformations)
 	return v
 }
 
 func (v Video) AddNamedTransformation() Video {
-	v.Transformations = v.Transformer.AddNamedTransformation(v.Transformations)
+	v.transformations = v.Transformer.AddNamedTransformation(v.transformations)
 	return v
 }
 
 func (v Video) AddUnderlay() Video {
-	v.Transformations = v.Transformer.AddUnderlay(v.Transformations)
+	v.transformations = v.Transformer.AddUnderlay(v.transformations)
 	return v
 }
 
 func (v Video) AddVideoCodec() Video {
-	v.Transformations = v.Transformer.AddVideoCodec(v.Transformations)
+	v.transformations = v.Transformer.AddVideoCodec(v.transformations)
 	return v
 }
 
 func (v Video) AddVideoSampling() Video {
-	v.Transformations = v.Transformer.AddVideoSampling(v.Transformations)
+	v.transformations = v.Transformer.AddVideoSampling(v.transformations)
 	return v
 }
 
 func (v Video) AddWidth() Video {
-	v.Transformations = v.Transformer.AddWidth(v.Transformations)
+	v.transformations = v.Transformer.AddWidth(v.transformations)
 	return v
 }
 
 func (v Video) AddXY() Video {
-	v.Transformations = v.Transformer.AddXY(v.Transformations)
+	v.transformations = v.Transformer.AddXY(v.transformations)
 	return v
 }
 
 func (v Video) AddVariable() Video {
-	v.Transformations = v.Transformer.AddVariable(v.Transformations)
+	v.transformations = v.Transformer.AddVariable(v.transformations)
 	return v
 }
 
@@ -247,4 +249,12 @@ func (v Video) RequestVideo(delivery string) ([]byte, error) {
 	r := request.Request{}
 	reqUrl := fmt.Sprintf("%s/%s/%s/%s", v.Url, delivery, v.Name, v.Ext)
 	return r.RequestMedia(reqUrl), nil
+}
+
+func (v Video) UploadVideo(params upload.UploaderParameters) interface{} {
+	for _, transformation := range v.transformations {
+		params.Transformation += transformation
+	}
+	u := upload.Uploader{}
+	return u.UploadMedia(params)
 }
