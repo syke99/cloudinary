@@ -1,7 +1,7 @@
 package transformer
 
 import (
-	"github.com/syke99/cloudinary/validator"
+	"github.com/syke99/cloudinary/internal/validator"
 )
 
 type AudioCodec struct {

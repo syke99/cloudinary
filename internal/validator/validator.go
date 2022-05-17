@@ -2,11 +2,26 @@ package validator
 
 import (
 	"errors"
+	"github.com/syke99/cloudinary/internal/internal_resources"
 
 	"github.com/syke99/cloudinary/resources"
 )
 
-func ValidateDeliveryType(delivery string) error {
+type Validator struct {
+	validator
+}
+
+type validator interface {
+	ValidateDeliveryType(string) error
+	ValidateAngleMode(mode string) error
+	ValidateAudioCodec(codec string) error
+	ValidateBackgroundAutoMode(mode string) error
+	ValidateBackgroundAutoDirection(direction string) error
+	ValidateColorSpaceMode(mode string) error
+	ValidateFunctionType(functionType string) error
+}
+
+func (v Validator) ValidateDeliveryType(delivery string) error {
 	if delivery != resources.Upload ||
 		delivery != resources.Private ||
 		delivery != resources.Authenticated ||
@@ -24,13 +39,13 @@ func ValidateDeliveryType(delivery string) error {
 		delivery != resources.DailyMotion ||
 		delivery != resources.Multi ||
 		delivery != resources.Delivery {
-		return resources.InvalidDeliveryType
+		return internal_resources.InvalidDeliveryType
 	}
 
 	return nil
 }
 
-func ValidateAngleMode(mode string) error {
+func (v Validator) ValidateAngleMode(mode string) error {
 	if mode != resources.AutoRight ||
 		mode != resources.AutoLeft ||
 		mode != resources.VFlip ||
@@ -41,7 +56,7 @@ func ValidateAngleMode(mode string) error {
 	return nil
 }
 
-func ValidateAudioCodec(codec string) error {
+func (v Validator) ValidateAudioCodec(codec string) error {
 	if codec != resources.None ||
 		codec != resources.Aac ||
 		codec != resources.Vorbis ||
@@ -52,7 +67,7 @@ func ValidateAudioCodec(codec string) error {
 	return nil
 }
 
-func ValidateBackgroundAutoMode(mode string) error {
+func (v Validator) ValidateBackgroundAutoMode(mode string) error {
 	if mode != resources.Border ||
 		mode != resources.Predominant ||
 		mode != resources.BorderContrast ||
@@ -66,7 +81,7 @@ func ValidateBackgroundAutoMode(mode string) error {
 	return nil
 }
 
-func ValidateBackgroundAutoDirection(direction string) error {
+func (v Validator) ValidateBackgroundAutoDirection(direction string) error {
 	if direction != resources.Horizontal ||
 		direction != resources.Vertical ||
 		direction != resources.DiagonalDesc ||
@@ -76,7 +91,7 @@ func ValidateBackgroundAutoDirection(direction string) error {
 	return nil
 }
 
-func ValidateColorSpaceMode(mode string) error {
+func (v Validator) ValidateColorSpaceMode(mode string) error {
 	if mode != resources.Srgb ||
 		mode != resources.TinySrgb ||
 		mode != resources.Cmyk ||
@@ -91,7 +106,7 @@ func ValidateColorSpaceMode(mode string) error {
 	return nil
 }
 
-func ValidateFunctionType(functionType string) error {
+func (v Validator) ValidateFunctionType(functionType string) error {
 	if functionType != resources.Remote ||
 		functionType != resources.Wasm {
 		return errors.New("custom function type provided not valid")

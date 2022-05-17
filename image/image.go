@@ -3,15 +3,16 @@ package image
 import (
 	"fmt"
 	"github.com/syke99/cloudinary/config"
+	"github.com/syke99/cloudinary/internal/internal_resources"
+	"github.com/syke99/cloudinary/internal/validator"
 	"github.com/syke99/cloudinary/request"
-	"github.com/syke99/cloudinary/resources"
 	"github.com/syke99/cloudinary/transformer"
 	"github.com/syke99/cloudinary/upload"
-	"github.com/syke99/cloudinary/validator"
 	"reflect"
 )
 
 type Image struct {
+	validator       validator.Validator
 	config          config.Config
 	Transformer     transformer.Transformer
 	transformations []string
@@ -65,6 +66,7 @@ func (i Image) NewImage(name string, url string, transformer transformer.Transfo
 	i.Name = name
 	i.Ext = ""
 	i.Url = url
+	i.validator = validator.Validator{}
 
 	return i
 }
@@ -225,7 +227,7 @@ func (i Image) AddVariable() Image {
 }
 
 func (i Image) RequestImage(delivery string) ([]byte, error) {
-	err := validator.ValidateDeliveryType(delivery)
+	err := i.validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -237,7 +239,7 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 
 func (i Image) UploadImage(params upload.UploaderParameters, apiKey string) (interface{}, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return nil, resources.NoUploadParamsSupplied
+		return nil, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range i.transformations {

@@ -2,17 +2,18 @@ package video
 
 import (
 	"fmt"
-	"github.com/syke99/cloudinary/resources"
+	"github.com/syke99/cloudinary/internal/internal_resources"
+	"github.com/syke99/cloudinary/internal/validator"
 	"github.com/syke99/cloudinary/upload"
 	"reflect"
 
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/request"
 	"github.com/syke99/cloudinary/transformer"
-	"github.com/syke99/cloudinary/validator"
 )
 
 type Video struct {
+	validator       validator.Validator
 	config          config.Config
 	Transformer     transformer.Transformer
 	transformations []string
@@ -69,6 +70,8 @@ func (v Video) NewVideo(name string, url string, transformer transformer.Transfo
 	v.Name = name
 	v.Ext = ""
 	v.Url = url
+	v.validator = validator.Validator{}
+
 	return v
 }
 
@@ -243,7 +246,7 @@ func (v Video) AddVariable() Video {
 }
 
 func (v Video) RequestVideo(delivery string) ([]byte, error) {
-	err := validator.ValidateDeliveryType(delivery)
+	err := v.validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -255,7 +258,7 @@ func (v Video) RequestVideo(delivery string) ([]byte, error) {
 
 func (v Video) UploadVideo(params upload.UploaderParameters, apiKey string) (interface{}, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return nil, resources.NoUploadParamsSupplied
+		return nil, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range v.transformations {

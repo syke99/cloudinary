@@ -1,4 +1,4 @@
-package resources
+package internal_resources
 
 import "errors"
 

@@ -3,9 +3,9 @@ package transformer
 import (
 	"errors"
 	"fmt"
+	"github.com/syke99/cloudinary/internal/validator"
 
 	"github.com/syke99/cloudinary/resources"
-	"github.com/syke99/cloudinary/validator"
 )
 
 type ColorSpace struct {

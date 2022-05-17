@@ -1,6 +1,8 @@
 package transformer
 
-import "github.com/syke99/cloudinary/validator"
+import (
+	"github.com/syke99/cloudinary/internal/validator"
+)
 
 type Angle struct {
 	Degrees int
