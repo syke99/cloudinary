@@ -236,6 +236,7 @@ func (u Uploader) UploadMedia(client *http.Client, params UploaderParameters, ap
 
 	formData := url.Values{}
 	formData.Add("api_key", apiKey)
+	formData.Add("signature", signature)
 
 	prms := reflect.ValueOf(&params).Elem()
 
