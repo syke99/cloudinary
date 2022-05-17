@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/syke99/cloudinary/api/request"
 	"github.com/syke99/cloudinary/api/upload"
+	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
@@ -11,14 +12,12 @@ import (
 	"reflect"
 	"strconv"
 	"time"
-
-	"github.com/syke99/cloudinary/config"
 )
 
 type Video struct {
 	client          *http.Client
 	validator       validator.Validator
-	config          config.Config
+	config          config.CloudinaryConfig
 	transformer     transformer.Transformer
 	transformations []string
 	Name            string
@@ -29,7 +28,7 @@ type Video struct {
 }
 
 type video interface {
-	ConfigureVideo(*http.Client, config.Config, transformer.Transformer, string, string, string) Video
+	ConfigureVideo(config.MediaConfig) Video
 	AddExtension(string) Video
 	AddAngle(transformer.Angle) Video
 	AddAudioCodec(transformer.AudioCodec) Video
@@ -68,15 +67,15 @@ type video interface {
 	UploadVideo(upload.UploaderParameters) (interface{}, error)
 }
 
-func (v Video) ConfigureVideo(client *http.Client, config config.Config, transformer transformer.Transformer, name string, reqUrl string, uploadUrl string) Video {
-	v.client = client
-	v.config = config
-	v.transformer = transformer
+func (v Video) ConfigureVideo(config config.MediaConfig) Video {
+	v.client = config.Client
+	v.config = config.Config
+	v.transformer = config.Transformer
 	v.transformations = []string{}
-	v.Name = name
+	v.Name = config.Name
 	v.Ext = ""
-	v.ReqUrl = reqUrl
-	v.UploadUrl = uploadUrl
+	v.ReqUrl = config.ReqUrl
+	v.UploadUrl = config.UploadUrl
 	v.validator = validator.Validator{}
 
 	return v

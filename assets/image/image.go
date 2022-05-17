@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/syke99/cloudinary/api/request"
 	"github.com/syke99/cloudinary/api/upload"
-	"github.com/syke99/cloudinary/config"
+	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
@@ -17,7 +17,7 @@ import (
 type Image struct {
 	client          *http.Client
 	validator       validator.Validator
-	config          config.Config
+	config          config.CloudinaryConfig
 	transformer     transformer.Transformer
 	transformations []string
 	Name            string
@@ -28,7 +28,7 @@ type Image struct {
 }
 
 type image interface {
-	ConfigureImage(*http.Client, config.Config, transformer.Transformer, string, string, string) Image
+	ConfigureImage(config.MediaConfig) Image
 	AddExtension(string) Image
 	AddAngle(transformer.Angle) Image
 	AddAspectRatio(transformer.AspectRatio) Image
@@ -64,15 +64,15 @@ type image interface {
 	UploadImage(upload.UploaderParameters) (interface{}, error)
 }
 
-func (i Image) ConfigureImage(client *http.Client, config config.Config, transformer transformer.Transformer, name string, reqUrl string, uploadUrl string) Image {
-	i.client = client
-	i.config = config
-	i.transformer = transformer
+func (i Image) ConfigureImage(config config.MediaConfig) Image {
+	i.client = config.Client
+	i.config = config.Config
+	i.transformer = config.Transformer
 	i.transformations = []string{}
-	i.Name = name
+	i.Name = config.Name
 	i.Ext = ""
-	i.ReqUrl = reqUrl
-	i.UploadUrl = uploadUrl
+	i.ReqUrl = config.ReqUrl
+	i.UploadUrl = config.UploadUrl
 	i.validator = validator.Validator{}
 
 	return i
