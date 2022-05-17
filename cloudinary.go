@@ -2,12 +2,12 @@ package cloudinary
 
 import (
 	"fmt"
+	"github.com/syke99/cloudinary/assets/image"
+	"github.com/syke99/cloudinary/assets/video"
 
 	"github.com/syke99/cloudinary/config"
-	"github.com/syke99/cloudinary/image"
 	"github.com/syke99/cloudinary/resources"
 	"github.com/syke99/cloudinary/transformer"
-	"github.com/syke99/cloudinary/video"
 )
 
 type Cloudinary struct {
@@ -44,13 +44,15 @@ func NewSignedCloudinary(cloud string, key string, secret string) *Cloudinary {
 }
 
 func (c Cloudinary) Image(name string) image.Image {
-	url := fmt.Sprintf("%s/%s/image/", resources.BaseUrl, c.config.Cloud)
+	reqUrl := fmt.Sprintf("%s/%s/image/", resources.BaseUrl, c.config.Cloud)
+	uploadUrl := fmt.Sprintf("%s/v1_1/%s/image/", resources.BaseUrl, c.config.Cloud)
 
-	return image.Image{}.NewImage(name, url, transformer.Transformer{}, c.config)
+	return image.Image{}.NewImage(name, reqUrl, uploadUrl, transformer.Transformer{}, c.config)
 }
 
 func (c Cloudinary) Video(name string) video.Video {
-	url := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.config.Cloud)
+	reqUrl := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.config.Cloud)
+	uploadUrl := fmt.Sprintf("%s/v1_1/%s/image/", resources.BaseUrl, c.config.Cloud)
 
-	return video.Video{}.NewVideo(name, url, transformer.Transformer{}, c.config)
+	return video.Video{}.NewVideo(name, reqUrl, uploadUrl, transformer.Transformer{}, c.config)
 }

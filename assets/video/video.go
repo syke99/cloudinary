@@ -2,13 +2,13 @@ package video
 
 import (
 	"fmt"
+	"github.com/syke99/cloudinary/api/request"
+	"github.com/syke99/cloudinary/api/upload"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/upload"
 	"reflect"
 
 	"github.com/syke99/cloudinary/config"
-	"github.com/syke99/cloudinary/request"
 	"github.com/syke99/cloudinary/transformer"
 )
 
@@ -19,12 +19,13 @@ type Video struct {
 	transformations []string
 	Name            string
 	Ext             string
-	Url             string
+	ReqUrl          string
+	UploadUrl       string
 	video
 }
 
 type video interface {
-	NewVideo(string, string, transformer.Transformer, config.Config) Video
+	NewVideo(string, string, string, transformer.Transformer, config.Config) Video
 	AddExtension(string) Video
 	AddAngle(transformer.Angle) Video
 	AddAudioCodec(transformer.AudioCodec) Video
@@ -60,16 +61,17 @@ type video interface {
 	AddXY() Video
 	AddVariable() Video
 	RequestVideo(string) ([]byte, error)
-	UploadVideo(upload.UploaderParameters, string) interface{}
+	UploadVideo(upload.UploaderParameters, string) (interface{}, error)
 }
 
-func (v Video) NewVideo(name string, url string, transformer transformer.Transformer, config config.Config) Video {
+func (v Video) NewVideo(name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Video {
 	v.config = config
 	v.Transformer = transformer
 	v.transformations = []string{}
 	v.Name = name
 	v.Ext = ""
-	v.Url = url
+	v.ReqUrl = reqUrl
+	v.UploadUrl = uploadUrl
 	v.validator = validator.Validator{}
 
 	return v
@@ -252,7 +254,7 @@ func (v Video) RequestVideo(delivery string) ([]byte, error) {
 	}
 
 	r := request.Request{}
-	reqUrl := fmt.Sprintf("%s/%s/%s/%s", v.Url, delivery, v.Name, v.Ext)
+	reqUrl := fmt.Sprintf("%s/%s/%s/%s", v.ReqUrl, delivery, v.Name, v.Ext)
 	return r.RequestMedia(reqUrl), nil
 }
 

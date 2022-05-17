@@ -2,12 +2,12 @@ package image
 
 import (
 	"fmt"
+	"github.com/syke99/cloudinary/api/request"
+	"github.com/syke99/cloudinary/api/upload"
 	"github.com/syke99/cloudinary/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/request"
 	"github.com/syke99/cloudinary/transformer"
-	"github.com/syke99/cloudinary/upload"
 	"reflect"
 )
 
@@ -18,12 +18,13 @@ type Image struct {
 	transformations []string
 	Name            string
 	Ext             string
-	Url             string
+	ReqUrl          string
+	UploadUrl       string
 	image
 }
 
 type image interface {
-	NewImage(string, string, transformer.Transformer, config.Config) Image
+	NewImage(string, string, string, transformer.Transformer, config.Config) Image
 	AddExtension(string) Image
 	AddAngle(transformer.Angle) Image
 	AddAspectRatio(transformer.AspectRatio) Image
@@ -56,16 +57,17 @@ type image interface {
 	AddZoom() Image
 	AddVariable() Image
 	RequestImage(string) ([]byte, error)
-	UploadImage(upload.UploaderParameters, string) interface{}
+	UploadImage(upload.UploaderParameters, string) (interface{}, error)
 }
 
-func (i Image) NewImage(name string, url string, transformer transformer.Transformer, config config.Config) Image {
+func (i Image) NewImage(name string, reqUrl string, uploadUrl string, transformer transformer.Transformer, config config.Config) Image {
 	i.config = config
 	i.Transformer = transformer
 	i.transformations = []string{}
 	i.Name = name
 	i.Ext = ""
-	i.Url = url
+	i.ReqUrl = reqUrl
+	i.UploadUrl = uploadUrl
 	i.validator = validator.Validator{}
 
 	return i
@@ -233,7 +235,7 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 	}
 
 	r := request.Request{}
-	reqUrl := fmt.Sprintf("%s/%s/%s/%s", i.Url, delivery, i.Name, i.Ext)
+	reqUrl := fmt.Sprintf("%s/%s/%s/%s", i.ReqUrl, delivery, i.Name, i.Ext)
 	return r.RequestMedia(reqUrl), nil
 }
 
