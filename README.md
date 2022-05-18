@@ -59,7 +59,10 @@ img.AddColor(blue)
 response, err := img.RequestImage(resources.Upload)
 ```
 
-You can also chain adding the transformations to an asset:
+### Functional Paradigm
+
+You can also use Cloudinary to follow more of a functional programming paradigm. For
+eample, you can also chain adding the transformations to an asset:
 
 ```go
 img.AddAngle(angle).AddColor(blue)
