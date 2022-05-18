@@ -6,8 +6,8 @@ import (
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/pkg/assets/image"
-	"github.com/syke99/cloudinary/pkg/assets/video"
+	"github.com/syke99/cloudinary/pkg/asset_types/image"
+	"github.com/syke99/cloudinary/pkg/asset_types/video"
 	"github.com/syke99/cloudinary/pkg/resources"
 	"net/http"
 )
