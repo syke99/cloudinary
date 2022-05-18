@@ -1,7 +1,6 @@
 package validator
 
 import (
-	"errors"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/pkg/resources"
 )
@@ -50,7 +49,7 @@ func (v Validator) ValidateAngleMode(mode string) error {
 		mode != resources.VFlip ||
 		mode != resources.Hflip ||
 		mode != resources.Ignore {
-		return errors.New("angle mode provided not valid")
+		return internal_resources.InvalidAngleMode
 	}
 	return nil
 }
@@ -61,7 +60,7 @@ func (v Validator) ValidateAudioCodec(codec string) error {
 		codec != resources.Vorbis ||
 		codec != resources.Mp3 ||
 		codec != resources.Opus {
-		return errors.New("audio codec provided not valid")
+		return internal_resources.InvalidAudioCodec
 	}
 	return nil
 }
@@ -75,7 +74,7 @@ func (v Validator) ValidateBackgroundAutoMode(mode string) error {
 		mode != resources.PredominantGradientContrast ||
 		mode != resources.BorderGradient ||
 		mode != resources.BorderGradientContrast {
-		return errors.New("backgroundauto mode provided not valid")
+		return internal_resources.InvalidBackgroundAutoMode
 	}
 	return nil
 }
@@ -85,7 +84,7 @@ func (v Validator) ValidateBackgroundAutoDirection(direction string) error {
 		direction != resources.Vertical ||
 		direction != resources.DiagonalDesc ||
 		direction != resources.DiagonalAsc {
-		return errors.New("backgroundauto direction provided not valid")
+		return internal_resources.InvalidBackgroundAutoDirection
 	}
 	return nil
 }
@@ -99,7 +98,7 @@ func (v Validator) ValidateColorSpaceMode(mode string) error {
 		mode != resources.SrgbTrueColor ||
 		mode != resources.CsIcc ||
 		mode != resources.Copy {
-		return errors.New("colorspace mode provided invalid")
+		return internal_resources.InvalidColorSpaceMode
 	}
 
 	return nil
@@ -108,7 +107,7 @@ func (v Validator) ValidateColorSpaceMode(mode string) error {
 func (v Validator) ValidateFunctionType(functionType string) error {
 	if functionType != resources.Remote ||
 		functionType != resources.Wasm {
-		return errors.New("custom function type provided not valid")
+		return internal_resources.InvalidCustomFunctionType
 	}
 	return nil
 }
