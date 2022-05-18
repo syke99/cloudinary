@@ -3,8 +3,7 @@ package validator
 import (
 	"errors"
 	"github.com/syke99/cloudinary/internal/internal_resources"
-
-	"github.com/syke99/cloudinary/resources"
+	"github.com/syke99/cloudinary/pkg/resources"
 )
 
 type Validator struct {

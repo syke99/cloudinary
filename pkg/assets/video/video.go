@@ -2,8 +2,8 @@ package video
 
 import (
 	"fmt"
-	"github.com/syke99/cloudinary/api/request"
-	"github.com/syke99/cloudinary/api/upload"
+	"github.com/syke99/cloudinary/internal/api/request"
+	"github.com/syke99/cloudinary/internal/api/upload"
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
@@ -20,6 +20,7 @@ type Video struct {
 	validator       validator.Validator
 	config          config.CloudinaryConfig
 	transformer     transformer.Transformer
+	uploader        upload.Uploader
 	transformations []string
 	Name            string
 	Ext             string
@@ -78,6 +79,7 @@ func (v Video) ConfigureVideo(config config.MediaConfig) Video {
 	v.ReqUrl = config.ReqUrl
 	v.UploadUrl = config.UploadUrl
 	v.validator = validator.Validator{}
+	v.uploader = upload.Uploader{}
 
 	return v
 }
@@ -272,11 +274,10 @@ func (v Video) UploadVideo(params upload.UploaderParameters) (interface{}, error
 		params.Transformation += transformation
 	}
 	params.TimeStampUnix = strconv.FormatInt(time.Now().Unix(), 10)
-	u := upload.Uploader{}
 
-	sortedParams := u.SortUploadParameters(params)
+	sortedParams := v.uploader.SortUploadParameters(params)
 
-	signature := u.GenerateSignature(sortedParams, v.config.ApiKey)
+	signature := v.uploader.GenerateSignature(sortedParams, v.config.ApiKey)
 
-	return u.UploadMedia(v.client, params, v.config.ApiKey, signature, v.UploadUrl), nil
+	return v.uploader.UploadMedia(v.client, params, v.config.ApiKey, signature, v.UploadUrl), nil
 }

@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/syke99/cloudinary/internal/validator"
-
-	"github.com/syke99/cloudinary/resources"
+	"github.com/syke99/cloudinary/pkg/resources"
 )
 
 type ColorSpace struct {

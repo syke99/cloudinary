@@ -2,8 +2,8 @@ package image
 
 import (
 	"fmt"
-	"github.com/syke99/cloudinary/api/request"
-	"github.com/syke99/cloudinary/api/upload"
+	"github.com/syke99/cloudinary/internal/api/request"
+	"github.com/syke99/cloudinary/internal/api/upload"
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
@@ -20,6 +20,7 @@ type Image struct {
 	validator       validator.Validator
 	config          config.CloudinaryConfig
 	transformer     transformer.Transformer
+	uploader        upload.Uploader
 	transformations []string
 	Name            string
 	Ext             string
@@ -75,6 +76,7 @@ func (i Image) ConfigureImage(config config.MediaConfig) Image {
 	i.ReqUrl = config.ReqUrl
 	i.UploadUrl = config.UploadUrl
 	i.validator = validator.Validator{}
+	i.uploader = upload.Uploader{}
 
 	return i
 }
@@ -254,11 +256,10 @@ func (i Image) UploadImage(params upload.UploaderParameters) (interface{}, error
 		params.Transformation += transformation
 	}
 	params.TimeStampUnix = strconv.FormatInt(time.Now().Unix(), 10)
-	u := upload.Uploader{}
 
-	sortedParams := u.SortUploadParameters(params)
+	sortedParams := i.uploader.SortUploadParameters(params)
 
-	signature := u.GenerateSignature(sortedParams, i.config.ApiKey)
+	signature := i.uploader.GenerateSignature(sortedParams, i.config.ApiKey)
 
-	return u.UploadMedia(i.client, params, i.config.ApiKey, signature, i.UploadUrl), nil
+	return i.uploader.UploadMedia(i.client, params, i.config.ApiKey, signature, i.UploadUrl), nil
 }
