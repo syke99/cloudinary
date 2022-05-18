@@ -75,8 +75,8 @@ func (i Image) ConfigureImage(config config.MediaConfig) Image {
 	i.Ext = ""
 	i.ReqUrl = config.ReqUrl
 	i.UploadUrl = config.UploadUrl
-	i.validator = validator.Validator{}
-	i.uploader = upload.Uploader{}
+	i.validator = config.Validator
+	i.uploader = config.Uploader
 
 	return i
 }

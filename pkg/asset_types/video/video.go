@@ -78,8 +78,8 @@ func (v Video) ConfigureVideo(config config.MediaConfig) Video {
 	v.Ext = ""
 	v.ReqUrl = config.ReqUrl
 	v.UploadUrl = config.UploadUrl
-	v.validator = validator.Validator{}
-	v.uploader = upload.Uploader{}
+	v.validator = config.Validator
+	v.uploader = config.Uploader
 
 	return v
 }

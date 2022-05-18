@@ -2,6 +2,7 @@ package cloudinary
 
 import (
 	"fmt"
+	"github.com/syke99/cloudinary/internal/api/upload"
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
@@ -17,6 +18,7 @@ type Cloudinary struct {
 	config      config.CloudinaryConfig
 	validator   validator.Validator
 	transformer transformer.Transformer
+	uploader    upload.Uploader
 	cloudinary
 }
 
@@ -45,11 +47,13 @@ func NewSignedCloudinary(client *http.Client, cloud string, key string, secret s
 	}
 	validator := validator.Validator{}
 	transformer := transformer.Transformer{}
+	uploader := upload.Uploader{}
 	return &Cloudinary{
 		client:      client,
 		config:      conf,
 		validator:   validator,
 		transformer: transformer,
+		uploader:    uploader,
 	}
 }
 
@@ -60,7 +64,9 @@ func (c *Cloudinary) Image(name string) image.Image {
 	config := config.MediaConfig{
 		Client:      c.client,
 		Config:      c.config,
+		Validator:   c.validator,
 		Transformer: c.transformer,
+		Uploader:    c.uploader,
 		Name:        name,
 		ReqUrl:      reqUrl,
 		UploadUrl:   uploadUrl,
@@ -76,7 +82,9 @@ func (c *Cloudinary) Video(name string) video.Video {
 	config := config.MediaConfig{
 		Client:      c.client,
 		Config:      c.config,
+		Validator:   c.validator,
 		Transformer: c.transformer,
+		Uploader:    c.uploader,
 		Name:        name,
 		ReqUrl:      reqUrl,
 		UploadUrl:   uploadUrl,
