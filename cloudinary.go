@@ -77,7 +77,7 @@ func (c *Cloudinary) Image(name string) image.Image {
 
 func (c *Cloudinary) Video(name string) video.Video {
 	reqUrl := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.config.Cloud)
-	uploadUrl := fmt.Sprintf("%s/v1_1/%s/image/", resources.BaseUrl, c.config.Cloud)
+	uploadUrl := fmt.Sprintf("%s/v1_1/%s/video/", resources.BaseUrl, c.config.Cloud)
 
 	config := config.MediaConfig{
 		Client:      c.client,
