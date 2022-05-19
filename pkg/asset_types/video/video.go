@@ -84,177 +84,177 @@ func (v Video) ConfigureVideo(config config.MediaConfig) Video {
 	return v
 }
 
-func (v Video) AddExtension(ext string) Video {
+func (v Video) AddExtension(ext string) *Video {
 	v.transformations = v.transformer.AddExtension(v.transformations, ext)
-	return v
+	return &v
 }
 
-func (v Video) AddAngle(angle transformations.Angle) Video {
+func (v *Video) AddAngle(angle transformations.Angle) *Video {
 	v.transformations = v.transformer.AddAngle(v.transformations, angle)
 	return v
 }
 
-func (v Video) AddAudioCodec(ac transformations.AudioCodec) Video {
+func (v *Video) AddAudioCodec(ac transformations.AudioCodec) *Video {
 	v.transformations = v.transformer.AddAudioCodec(v.transformations, ac)
 	return v
 }
 
-func (v Video) AddAudioFrequency(af transformations.AudioFrequency) Video {
+func (v *Video) AddAudioFrequency(af transformations.AudioFrequency) *Video {
 	v.transformations = v.transformer.AddAudioFrequency(v.transformations, af)
 	return v
 }
 
-func (v Video) AddBackground(background transformations.Background) Video {
+func (v *Video) AddBackground(background transformations.Background) *Video {
 	v.transformations = v.transformer.AddBackground(v.transformations, background)
 	return v
 }
 
-func (v Video) AddBorder(border transformations.Border) Video {
+func (v *Video) AddBorder(border transformations.Border) *Video {
 	v.transformations = v.transformer.AddBorder(v.transformations, border)
 	return v
 }
 
-func (v Video) AddBitrate(br transformations.BitRate) Video {
+func (v *Video) AddBitrate(br transformations.BitRate) *Video {
 	v.transformations = v.transformer.AddBitrate(v.transformations, br)
 	return v
 }
 
-func (v Video) AddCropOrResize(cr transformations.CropResize) Video {
+func (v *Video) AddCropOrResize(cr transformations.CropResize) *Video {
 	v.transformations = v.transformer.AddCropOrResize(v.transformations, cr)
 	return v
 }
 
-func (v Video) AddColor(color transformations.Color) Video {
+func (v *Video) AddColor(color transformations.Color) *Video {
 	v.transformations = v.transformer.AddColor(v.transformations, color)
 	return v
 }
 
-func (v Video) AddColorSpace(colorSpace transformations.ColorSpace) Video {
+func (v *Video) AddColorSpace(colorSpace transformations.ColorSpace) *Video {
 	v.transformations = v.transformer.AddColorSpace(v.transformations, colorSpace)
 	return v
 }
 
-func (v Video) AddDelay(delay transformations.Delay) Video {
+func (v *Video) AddDelay(delay transformations.Delay) *Video {
 	v.transformations = v.transformer.AddDelay(v.transformations, delay)
 	return v
 }
 
-func (v Video) AddDPR(dpr transformations.DPR) Video {
+func (v *Video) AddDPR(dpr transformations.DPR) *Video {
 	v.transformations = v.transformer.AddDPR(v.transformations, dpr)
 	return v
 }
 
-func (v Video) AddDuration(duration transformations.Duration) Video {
+func (v *Video) AddDuration(duration transformations.Duration) *Video {
 	v.transformations = v.transformer.AddDuration(v.transformations, duration)
 	return v
 }
 
-func (v Video) AddEffect(effect transformations.Effect) Video {
+func (v *Video) AddEffect(effect transformations.Effect) *Video {
 	v.transformations = v.transformer.AddEffect(v.transformations, effect)
 	return v
 }
 
-func (v Video) AddEndOffset() Video {
+func (v *Video) AddEndOffset() *Video {
 	v.transformations = v.transformer.AddEndOffset(v.transformations)
 	return v
 }
 
-func (v Video) AddFormat() Video {
+func (v *Video) AddFormat() *Video {
 	v.transformations = v.transformer.AddFormat(v.transformations)
 	return v
 }
 
-func (v Video) AddFlag() Video {
+func (v *Video) AddFlag() *Video {
 	v.transformations = v.transformer.AddFlag(v.transformations)
 	return v
 }
 
-func (v Video) AddFPS() Video {
+func (v *Video) AddFPS() *Video {
 	v.transformations = v.transformer.AddFPS(v.transformations)
 	return v
 }
 
-func (v Video) AddGravity() Video {
+func (v *Video) AddGravity() *Video {
 	v.transformations = v.transformer.AddGravity(v.transformations)
 	return v
 }
 
-func (v Video) AddHeight() Video {
+func (v *Video) AddHeight() *Video {
 	v.transformations = v.transformer.AddHeight(v.transformations)
 	return v
 }
 
-func (v Video) AddIf() Video {
+func (v *Video) AddIf() *Video {
 	v.transformations = v.transformer.AddIf(v.transformations)
 	return v
 }
 
-func (v Video) AddKeyframeInterval() Video {
+func (v *Video) AddKeyframeInterval() *Video {
 	v.transformations = v.transformer.AddKeyframeInterval(v.transformations)
 	return v
 }
 
-func (v Video) AddLayer() Video {
+func (v *Video) AddLayer() *Video {
 	v.transformations = v.transformer.AddLayer(v.transformations)
 	return v
 }
 
-func (v Video) AddQuality() Video {
+func (v *Video) AddQuality() *Video {
 	v.transformations = v.transformer.AddQuality(v.transformations)
 	return v
 }
 
-func (v Video) AddRoundCorners() Video {
+func (v *Video) AddRoundCorners() *Video {
 	v.transformations = v.transformer.AddRoundCorners(v.transformations)
 	return v
 }
 
-func (v Video) AddStartOffset() Video {
+func (v *Video) AddStartOffset() *Video {
 	v.transformations = v.transformer.AddStartOffset(v.transformations)
 	return v
 }
 
-func (v Video) AddStreamingProfile() Video {
+func (v *Video) AddStreamingProfile() *Video {
 	v.transformations = v.transformer.AddStreamingProfile(v.transformations)
 	return v
 }
 
-func (v Video) AddNamedTransformation() Video {
+func (v *Video) AddNamedTransformation() *Video {
 	v.transformations = v.transformer.AddNamedTransformation(v.transformations)
 	return v
 }
 
-func (v Video) AddUnderlay() Video {
+func (v *Video) AddUnderlay() *Video {
 	v.transformations = v.transformer.AddUnderlay(v.transformations)
 	return v
 }
 
-func (v Video) AddVideoCodec() Video {
+func (v *Video) AddVideoCodec() *Video {
 	v.transformations = v.transformer.AddVideoCodec(v.transformations)
 	return v
 }
 
-func (v Video) AddVideoSampling() Video {
+func (v *Video) AddVideoSampling() *Video {
 	v.transformations = v.transformer.AddVideoSampling(v.transformations)
 	return v
 }
 
-func (v Video) AddWidth() Video {
+func (v *Video) AddWidth() *Video {
 	v.transformations = v.transformer.AddWidth(v.transformations)
 	return v
 }
 
-func (v Video) AddXY() Video {
+func (v *Video) AddXY() *Video {
 	v.transformations = v.transformer.AddXY(v.transformations)
 	return v
 }
 
-func (v Video) AddVariable() Video {
+func (v *Video) AddVariable() *Video {
 	v.transformations = v.transformer.AddVariable(v.transformations)
 	return v
 }
 
-func (v Video) RequestVideo(delivery string) ([]byte, error) {
+func (v *Video) RequestVideo(delivery string) ([]byte, error) {
 	err := v.validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err
@@ -265,7 +265,7 @@ func (v Video) RequestVideo(delivery string) ([]byte, error) {
 	return r.RequestMedia(v.client, reqUrl), nil
 }
 
-func (v Video) UploadVideo(params upload.UploaderParameters) (interface{}, error) {
+func (v *Video) UploadVideo(params upload.UploaderParameters) (interface{}, error) {
 	if reflect.ValueOf(params).Len() == 0 {
 		return nil, internal_resources.NoUploadParamsSupplied
 	}

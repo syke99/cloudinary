@@ -66,7 +66,7 @@ type image interface {
 	UploadImage(upload.UploaderParameters) (interface{}, error)
 }
 
-func (i Image) ConfigureImage(config config.MediaConfig) Image {
+func (i Image) ConfigureImage(config config.MediaConfig) *Image {
 	i.client = config.Client
 	i.config = config.Config
 	i.transformer = config.Transformer
@@ -78,165 +78,165 @@ func (i Image) ConfigureImage(config config.MediaConfig) Image {
 	i.validator = config.Validator
 	i.uploader = config.Uploader
 
-	return i
+	return &i
 }
 
-func (i Image) AddExtension(ext string) Image {
+func (i Image) AddExtension(ext string) *Image {
 	i.transformations = i.transformer.AddExtension(i.transformations, ext)
-	return i
+	return &i
 }
 
-func (i Image) AddAngle(angle transformations.Angle) Image {
+func (i *Image) AddAngle(angle transformations.Angle) *Image {
 	i.transformations = i.transformer.AddAngle(i.transformations, angle)
 	return i
 }
 
-func (i Image) AddAspectRatio(ar transformations.AspectRatio) Image {
+func (i *Image) AddAspectRatio(ar transformations.AspectRatio) *Image {
 	i.transformations = i.transformer.AddAspectRatio(i.transformations, ar)
 	return i
 }
 
-func (i Image) AddBackground(background transformations.Background) Image {
+func (i *Image) AddBackground(background transformations.Background) *Image {
 	i.transformations = i.transformer.AddBackground(i.transformations, background)
 	return i
 }
 
-func (i Image) AddBorder(border transformations.Border) Image {
+func (i *Image) AddBorder(border transformations.Border) *Image {
 	i.transformations = i.transformer.AddBorder(i.transformations, border)
 	return i
 }
 
-func (i Image) AddCropOrResize(resize transformations.CropResize) Image {
+func (i *Image) AddCropOrResize(resize transformations.CropResize) *Image {
 	i.transformations = i.transformer.AddCropOrResize(i.transformations, resize)
 	return i
 }
 
-func (i Image) AddColor(color transformations.Color) Image {
+func (i *Image) AddColor(color transformations.Color) *Image {
 	i.transformations = i.transformer.AddColor(i.transformations, color)
 	return i
 }
 
-func (i Image) AddColorSpace(space transformations.ColorSpace) Image {
+func (i *Image) AddColorSpace(space transformations.ColorSpace) *Image {
 	i.transformations = i.transformer.AddColorSpace(i.transformations, space)
 	return i
 }
 
-func (i Image) AddDefaultImage(defaultImage transformations.DefaultImage) Image {
+func (i *Image) AddDefaultImage(defaultImage transformations.DefaultImage) *Image {
 	i.transformations = i.transformer.AddDefaultImage(i.transformations, defaultImage)
 	return i
 }
 
-func (i Image) AddDelay(delay transformations.Delay) Image {
+func (i *Image) AddDelay(delay transformations.Delay) *Image {
 	i.transformations = i.transformer.AddDelay(i.transformations, delay)
 	return i
 }
 
-func (i Image) AddDensity(density transformations.Density) Image {
+func (i *Image) AddDensity(density transformations.Density) *Image {
 	i.transformations = i.transformer.AddDensity(i.transformations, density)
 	return i
 }
 
-func (i Image) AddDPR(dpr transformations.DPR) Image {
+func (i *Image) AddDPR(dpr transformations.DPR) *Image {
 	i.transformations = i.transformer.AddDPR(i.transformations, dpr)
 	return i
 }
 
-func (i Image) AddEffect(effect transformations.Effect) Image {
+func (i *Image) AddEffect(effect transformations.Effect) *Image {
 	i.transformations = i.transformer.AddEffect(i.transformations, effect)
 	return i
 }
 
-func (i Image) AddFormat() Image {
+func (i *Image) AddFormat() *Image {
 	i.transformations = i.transformer.AddFormat(i.transformations)
 	return i
 }
 
-func (i Image) AddFlag() Image {
+func (i *Image) AddFlag() *Image {
 	i.transformations = i.transformer.AddFlag(i.transformations)
 	return i
 }
 
-func (i Image) AddCustomFunction() Image {
+func (i *Image) AddCustomFunction() *Image {
 	i.transformations = i.transformer.AddCustomFunction(i.transformations)
 	return i
 }
 
-func (i Image) AddGravity() Image {
+func (i *Image) AddGravity() *Image {
 	i.transformations = i.transformer.AddGravity(i.transformations)
 	return i
 }
 
-func (i Image) AddHeight() Image {
+func (i *Image) AddHeight() *Image {
 	i.transformations = i.transformer.AddHeight(i.transformations)
 	return i
 }
 
-func (i Image) AddIf() Image {
+func (i *Image) AddIf() *Image {
 	i.transformations = i.transformer.AddIf(i.transformations)
 	return i
 }
 
-func (i Image) AddLayer() Image {
+func (i *Image) AddLayer() *Image {
 	i.transformations = i.transformer.AddLayer(i.transformations)
 	return i
 }
 
-func (i Image) AddOpacity() Image {
+func (i *Image) AddOpacity() *Image {
 	i.transformations = i.transformer.AddOpacity(i.transformations)
 	return i
 }
 
-func (i Image) AddPrefix() Image {
+func (i *Image) AddPrefix() *Image {
 	i.transformations = i.transformer.AddPrefix(i.transformations)
 	return i
 }
 
-func (i Image) AddPageOrFileLayer() Image {
+func (i *Image) AddPageOrFileLayer() *Image {
 	i.transformations = i.transformer.AddPageOrFileLayer(i.transformations)
 	return i
 }
 
-func (i Image) AddQuality() Image {
+func (i *Image) AddQuality() *Image {
 	i.transformations = i.transformer.AddQuality(i.transformations)
 	return i
 }
 
-func (i Image) AddRoundCorners() Image {
+func (i *Image) AddRoundCorners() *Image {
 	i.transformations = i.transformer.AddRoundCorners(i.transformations)
 	return i
 }
 
-func (i Image) AddNamedTransformation() Image {
+func (i *Image) AddNamedTransformation() *Image {
 	i.transformations = i.transformer.AddNamedTransformation(i.transformations)
 	return i
 }
 
-func (i Image) AddUnderlay() Image {
+func (i *Image) AddUnderlay() *Image {
 	i.transformations = i.transformer.AddUnderlay(i.transformations)
 	return i
 }
 
-func (i Image) AddWidth() Image {
+func (i *Image) AddWidth() *Image {
 	i.transformations = i.transformer.AddWidth(i.transformations)
 	return i
 }
 
-func (i Image) AddXY() Image {
+func (i *Image) AddXY() *Image {
 	i.transformations = i.transformer.AddXY(i.transformations)
 	return i
 }
 
-func (i Image) AddZoom() Image {
+func (i *Image) AddZoom() *Image {
 	i.transformations = i.transformer.AddZoom(i.transformations)
 	return i
 }
 
-func (i Image) AddVariable() Image {
+func (i *Image) AddVariable() *Image {
 	i.transformations = i.transformer.AddVariable(i.transformations)
 	return i
 }
 
-func (i Image) RequestImage(delivery string) ([]byte, error) {
+func (i *Image) RequestImage(delivery string) ([]byte, error) {
 	err := i.validator.ValidateDeliveryType(delivery)
 	if err != nil {
 		return []byte{}, err
@@ -247,9 +247,9 @@ func (i Image) RequestImage(delivery string) ([]byte, error) {
 	return r.RequestMedia(i.client, reqUrl), nil
 }
 
-func (i Image) UploadImage(params upload.UploaderParameters) (interface{}, error) {
+func (i *Image) UploadImage(params upload.UploaderParameters) (upload.UploaderResponse, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return nil, internal_resources.NoUploadParamsSupplied
+		return upload.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range i.transformations {
