@@ -26,6 +26,7 @@ func TestNewVideo(t *testing.T) {
 
 	testVideo := NewVideo(mockedMediaConfig)
 
+	assert.NotZero(t, testVideo)
 	assert.Equal(t, test.TestMediaName, testVideo.Name)
 	assert.Equal(t, test.TestMediaReqUrl, testVideo.ReqUrl)
 	assert.Equal(t, test.TestMediaUploadUrl, testVideo.UploadUrl)

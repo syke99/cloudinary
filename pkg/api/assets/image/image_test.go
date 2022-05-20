@@ -26,7 +26,7 @@ func TestNewImage(t *testing.T) {
 
 	testImage := NewImage(mockedMediaConfig)
 
-	assert.NotNil(t, testImage)
+	assert.NotZero(t, testImage)
 	assert.Equal(t, test.TestMediaName, testImage.Name)
 	assert.Equal(t, test.TestMediaReqUrl, testImage.ReqUrl)
 	assert.Equal(t, test.TestMediaUploadUrl, testImage.UploadUrl)
