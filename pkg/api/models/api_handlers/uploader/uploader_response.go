@@ -1,5 +1,7 @@
 package uploader
 
+// UploaderResponse is a struct that the response from Cloudinary's upload API
+// will be unmarshalled into
 type UploaderResponse struct {
 	AssetId          string          `json:"asset_id"`
 	PublicId         string          `json:"public_id"`

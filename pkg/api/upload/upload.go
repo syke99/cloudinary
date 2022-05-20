@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -203,8 +204,9 @@ func (u Uploader) UploadMedia(client *http.Client, params uploader.UploaderParam
 	res, _ := client.Do(req)
 
 	// unmarshall res into resp
+	resBytes, _ := ioutil.ReadAll(res.Body)
 
-	json.NewDecoder(res.Body).Decode(&resp)
+	json.Unmarshal(resBytes, &resp)
 
 	return resp
 }
