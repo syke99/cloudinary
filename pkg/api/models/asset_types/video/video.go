@@ -2,13 +2,14 @@ package video
 
 import (
 	"fmt"
-	"github.com/syke99/cloudinary/internal/api/request"
 	"github.com/syke99/cloudinary/internal/api/upload"
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
+	upload2 "github.com/syke99/cloudinary/pkg/api/request"
+	upload3 "github.com/syke99/cloudinary/pkg/api/upload"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -20,7 +21,7 @@ type Video struct {
 	validator       validator.Validator
 	config          config.CloudinaryConfig
 	transformer     transformer.Transformer
-	uploader        upload.Uploader
+	uploader        upload3.Uploader
 	transformations []string
 	Name            string
 	Ext             string
@@ -262,7 +263,7 @@ func (v *Video) RequestVideo(delivery string) ([]byte, error) {
 		return []byte{}, err
 	}
 
-	r := request.Request{}
+	r := upload2.Request{}
 	reqUrl := fmt.Sprintf("%s/%s/%s/%s", v.ReqUrl, delivery, v.Name, v.Ext)
 	return r.RequestMedia(v.client, reqUrl), nil
 }
