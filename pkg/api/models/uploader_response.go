@@ -1,4 +1,4 @@
-package uploader
+package models
 
 // UploaderResponse is a struct that the response from Cloudinary's upload API
 // will be unmarshalled into

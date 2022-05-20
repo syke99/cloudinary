@@ -12,7 +12,7 @@ import (
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/pkg/api/models/api_handlers/uploader"
+	"github.com/syke99/cloudinary/pkg/api/models"
 	"github.com/syke99/cloudinary/pkg/api/request"
 	"github.com/syke99/cloudinary/pkg/api/upload"
 )
@@ -64,7 +64,7 @@ type image interface {
 	AddZoom() *Image
 	AddVariable() *Image
 	RequestImage(string) ([]byte, error)
-	UploadImage(uploader.UploaderParameters) (uploader.UploaderResponse, error)
+	UploadImage(models.UploaderParameters) (models.UploaderResponse, error)
 }
 
 func NewImage(config config.MediaConfig) *Image {
@@ -250,9 +250,9 @@ func (i *Image) RequestImage(delivery string) ([]byte, error) {
 	return r.RequestMedia(i.client, reqUrl), nil
 }
 
-func (i *Image) UploadImage(params uploader.UploaderParameters) (uploader.UploaderResponse, error) {
+func (i *Image) UploadImage(params models.UploaderParameters) (models.UploaderResponse, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return uploader.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
+		return models.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range i.transformations {

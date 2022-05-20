@@ -1,4 +1,4 @@
-package uploader
+package models
 
 // UploaderParameters is a struct that the developer can use to set specific parameters to their upload
 // to perform various actions, such as transforming an asset, tagging an asset, adding metadata to an

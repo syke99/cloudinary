@@ -14,21 +14,21 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/syke99/cloudinary/pkg/api/models/api_handlers/uploader"
+	"github.com/syke99/cloudinary/pkg/api/models"
 )
 
 type Uploader struct {
-	params uploader.UploaderParameters
+	params models.UploaderParameters
 	upload
 }
 
 type upload interface {
-	SortUploadParameters(uploader.UploaderParameters) []string
+	SortUploadParameters(models.UploaderParameters) []string
 	GenerateSignature([]string, string) string
-	UploadMedia(*http.Client, uploader.UploaderParameters, string, string, string) uploader.UploaderResponse
+	UploadMedia(*http.Client, models.UploaderParameters, string, string, string) models.UploaderResponse
 }
 
-func (u Uploader) SortUploadParameters(params uploader.UploaderParameters) []string {
+func (u Uploader) SortUploadParameters(params models.UploaderParameters) []string {
 
 	var sortedParams []string
 
@@ -140,8 +140,8 @@ func (u Uploader) GenerateSignature(sortedParams []string, apiKey string) string
 	return encodedSignature
 }
 
-func (u Uploader) UploadMedia(client *http.Client, params uploader.UploaderParameters, apiKey string, signature string, uploadUrl string) uploader.UploaderResponse {
-	var resp uploader.UploaderResponse
+func (u Uploader) UploadMedia(client *http.Client, params models.UploaderParameters, apiKey string, signature string, uploadUrl string) models.UploaderResponse {
+	var resp models.UploaderResponse
 
 	formData := url.Values{}
 	formData.Add("api_key", apiKey)
