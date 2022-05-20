@@ -12,8 +12,9 @@ import (
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/pkg/api/request"
-	"github.com/syke99/cloudinary/pkg/api/upload"
+	"github.com/syke99/cloudinary/pkg/api/actions/request"
+	"github.com/syke99/cloudinary/pkg/api/actions/upload"
+	"github.com/syke99/cloudinary/pkg/api/models"
 )
 
 type Video struct {
@@ -67,7 +68,7 @@ type video interface {
 	AddXY() *Video
 	AddVariable() *Video
 	RequestVideo(string) ([]byte, error)
-	UploadVideo(uploader.UploaderParameters) (uploader.UploaderResponse, error)
+	UploadVideo(models.UploaderParameters) (models.UploaderResponse, error)
 }
 
 func NewVideo(config config.MediaConfig) *Video {
@@ -268,9 +269,9 @@ func (v *Video) RequestVideo(delivery string) ([]byte, error) {
 	return r.RequestMedia(v.client, reqUrl), nil
 }
 
-func (v *Video) UploadVideo(params uploader.UploaderParameters) (uploader.UploaderResponse, error) {
+func (v *Video) UploadVideo(params models.UploaderParameters) (models.UploaderResponse, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return uploader.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
+		return models.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range v.transformations {

@@ -12,9 +12,9 @@ import (
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
+	"github.com/syke99/cloudinary/pkg/api/actions/request"
+	"github.com/syke99/cloudinary/pkg/api/actions/upload"
 	"github.com/syke99/cloudinary/pkg/api/models"
-	"github.com/syke99/cloudinary/pkg/api/request"
-	"github.com/syke99/cloudinary/pkg/api/upload"
 )
 
 type Image struct {

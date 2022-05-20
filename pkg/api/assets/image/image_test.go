@@ -9,7 +9,7 @@ import (
 	"github.com/syke99/cloudinary/internal/internal_resources/test"
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/pkg/api/upload"
+	"github.com/syke99/cloudinary/pkg/api/actions/upload"
 )
 
 func TestNewImage(t *testing.T) {
@@ -26,6 +26,7 @@ func TestNewImage(t *testing.T) {
 
 	testImage := NewImage(mockedMediaConfig)
 
+	assert.NotNil(t, testImage)
 	assert.Equal(t, test.TestMediaName, testImage.Name)
 	assert.Equal(t, test.TestMediaReqUrl, testImage.ReqUrl)
 	assert.Equal(t, test.TestMediaUploadUrl, testImage.UploadUrl)

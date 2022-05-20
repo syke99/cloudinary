@@ -1,10 +1,11 @@
 package config
 
 import (
+	"net/http"
+
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/validator"
-	"github.com/syke99/cloudinary/pkg/api/upload"
-	"net/http"
+	"github.com/syke99/cloudinary/pkg/api/actions/upload"
 )
 
 type CloudinaryConfig struct {
