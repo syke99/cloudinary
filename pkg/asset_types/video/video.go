@@ -30,63 +30,65 @@ type Video struct {
 }
 
 type video interface {
-	ConfigureVideo(config.MediaConfig) Video
-	AddExtension(string) Video
-	AddAngle(transformations.Angle) Video
-	AddAudioCodec(transformations.AudioCodec) Video
-	AddAudioFrequency(transformations.AudioFrequency) Video
-	AddBackground(transformations.Background) Video
-	AddBorder(transformations.Border) Video
-	AddBitrate(transformations.BitRate) Video
-	AddCropOrResize(transformations.CropResize) Video
-	AddColor(transformations.Color) Video
-	AddColorSpace(transformations.ColorSpace) Video
-	AddDelay(transformations.Delay) Video
-	AddDPR(transformations.DPR) Video
-	AddDuration(transformations.Duration) Video
-	AddEffect(transformations.Effect) Video
-	AddEndOffset() Video
-	AddFormat() Video
-	AddFlag() Video
-	AddFPS() Video
-	AddGravity() Video
-	AddHeight() Video
-	AddIf() Video
-	AddKeyframeInterval() Video
-	AddLayer() Video
-	AddQuality() Video
-	AddRoundCorners() Video
-	AddStartOffset() Video
-	AddStreamingProfile() Video
-	AddNamedTransformation() Video
-	AddUnderlay() Video
-	AddVideoCodec() Video
-	AddVideoSampling() Video
-	AddWidth() Video
-	AddXY() Video
-	AddVariable() Video
+	ConfigureVideo(config.MediaConfig) *Video
+	AddExtension(string) *Video
+	AddAngle(transformations.Angle) *Video
+	AddAudioCodec(transformations.AudioCodec) *Video
+	AddAudioFrequency(transformations.AudioFrequency) *Video
+	AddBackground(transformations.Background) *Video
+	AddBorder(transformations.Border) *Video
+	AddBitrate(transformations.BitRate) *Video
+	AddCropOrResize(transformations.CropResize) *Video
+	AddColor(transformations.Color) *Video
+	AddColorSpace(transformations.ColorSpace) *Video
+	AddDelay(transformations.Delay) *Video
+	AddDPR(transformations.DPR) *Video
+	AddDuration(transformations.Duration) *Video
+	AddEffect(transformations.Effect) *Video
+	AddEndOffset() *Video
+	AddFormat() *Video
+	AddFlag() *Video
+	AddFPS() *Video
+	AddGravity() *Video
+	AddHeight() *Video
+	AddIf() *Video
+	AddKeyframeInterval() *Video
+	AddLayer() *Video
+	AddQuality() *Video
+	AddRoundCorners() *Video
+	AddStartOffset() *Video
+	AddStreamingProfile() *Video
+	AddNamedTransformation() *Video
+	AddUnderlay() *Video
+	AddVideoCodec() *Video
+	AddVideoSampling() *Video
+	AddWidth() *Video
+	AddXY() *Video
+	AddVariable() *Video
 	RequestVideo(string) ([]byte, error)
-	UploadVideo(upload.UploaderParameters) (interface{}, error)
+	UploadVideo(upload.UploaderParameters) (upload.UploaderResponse, error)
 }
 
-func (v Video) ConfigureVideo(config config.MediaConfig) Video {
-	v.client = config.Client
-	v.config = config.Config
-	v.transformer = config.Transformer
-	v.transformations = []string{}
-	v.Name = config.Name
-	v.Ext = ""
-	v.ReqUrl = config.ReqUrl
-	v.UploadUrl = config.UploadUrl
-	v.validator = config.Validator
-	v.uploader = config.Uploader
+func NewVideo(config config.MediaConfig) *Video {
+	v := Video{
+		client:          config.Client,
+		config:          config.Config,
+		transformer:     config.Transformer,
+		transformations: []string{},
+		Name:            config.Name,
+		Ext:             "",
+		ReqUrl:          config.ReqUrl,
+		UploadUrl:       config.UploadUrl,
+		validator:       config.Validator,
+		uploader:        config.Uploader,
+	}
 
-	return v
-}
-
-func (v Video) AddExtension(ext string) *Video {
-	v.transformations = v.transformer.AddExtension(v.transformations, ext)
 	return &v
+}
+
+func (v *Video) AddExtension(ext string) *Video {
+	v.transformations = v.transformer.AddExtension(v.transformations, ext)
+	return v
 }
 
 func (v *Video) AddAngle(angle transformations.Angle) *Video {
@@ -265,9 +267,9 @@ func (v *Video) RequestVideo(delivery string) ([]byte, error) {
 	return r.RequestMedia(v.client, reqUrl), nil
 }
 
-func (v *Video) UploadVideo(params upload.UploaderParameters) (interface{}, error) {
+func (v *Video) UploadVideo(params upload.UploaderParameters) (upload.UploaderResponse, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return nil, internal_resources.NoUploadParamsSupplied
+		return upload.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range v.transformations {

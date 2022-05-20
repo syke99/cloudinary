@@ -30,60 +30,61 @@ type Image struct {
 }
 
 type image interface {
-	ConfigureImage(config.MediaConfig) Image
-	AddExtension(string) Image
-	AddAngle(transformations.Angle) Image
-	AddAspectRatio(transformations.AspectRatio) Image
-	AddBackground(transformations.Background) Image
-	AddBorder(transformations.Border) Image
-	AddCropOrResize(transformations.CropResize) Image
-	AddColor(transformations.Color) Image
-	AddColorSpace(transformations.ColorSpace) Image
-	AddDefaultImage(transformations.DefaultImage) Image
-	AddDelay(transformations.Delay) Image
-	AddDensity(transformations.Density) Image
-	AddDPR(transformations.DPR) Image
-	AddEffect(transformations.Effect) Image
-	AddFormat() Image
-	AddFlag() Image
-	AddCustomFunction() Image
-	AddGravity() Image
-	AddHeight() Image
-	AddIf() Image
-	AddLayer() Image
-	AddOpacity() Image
-	AddPrefix() Image
-	AddPageOrFileLayer() Image
-	AddQuality() Image
-	AddRoundCorners() Image
-	AddNamedTransformation() Image
-	AddUnderlay() Image
-	AddWidth() Image
-	AddXY() Image
-	AddZoom() Image
-	AddVariable() Image
+	AddExtension(string) *Image
+	AddAngle(transformations.Angle) *Image
+	AddAspectRatio(transformations.AspectRatio) *Image
+	AddBackground(transformations.Background) *Image
+	AddBorder(transformations.Border) *Image
+	AddCropOrResize(transformations.CropResize) *Image
+	AddColor(transformations.Color) *Image
+	AddColorSpace(transformations.ColorSpace) *Image
+	AddDefaultImage(transformations.DefaultImage) *Image
+	AddDelay(transformations.Delay) *Image
+	AddDensity(transformations.Density) *Image
+	AddDPR(transformations.DPR) *Image
+	AddEffect(transformations.Effect) *Image
+	AddFormat() *Image
+	AddFlag() *Image
+	AddCustomFunction() *Image
+	AddGravity() *Image
+	AddHeight() *Image
+	AddIf() *Image
+	AddLayer() *Image
+	AddOpacity() *Image
+	AddPrefix() *Image
+	AddPageOrFileLayer() *Image
+	AddQuality() *Image
+	AddRoundCorners() *Image
+	AddNamedTransformation() *Image
+	AddUnderlay() *Image
+	AddWidth() *Image
+	AddXY() *Image
+	AddZoom() *Image
+	AddVariable() *Image
 	RequestImage(string) ([]byte, error)
-	UploadImage(upload.UploaderParameters) (interface{}, error)
+	UploadImage(upload.UploaderParameters) (upload.UploaderResponse, error)
 }
 
-func (i Image) ConfigureImage(config config.MediaConfig) *Image {
-	i.client = config.Client
-	i.config = config.Config
-	i.transformer = config.Transformer
-	i.transformations = []string{}
-	i.Name = config.Name
-	i.Ext = ""
-	i.ReqUrl = config.ReqUrl
-	i.UploadUrl = config.UploadUrl
-	i.validator = config.Validator
-	i.uploader = config.Uploader
+func NewImage(config config.MediaConfig) *Image {
+	i := Image{
+		client:          config.Client,
+		config:          config.Config,
+		transformer:     config.Transformer,
+		transformations: []string{},
+		Name:            config.Name,
+		Ext:             "",
+		ReqUrl:          config.ReqUrl,
+		UploadUrl:       config.UploadUrl,
+		validator:       config.Validator,
+		uploader:        config.Uploader,
+	}
 
 	return &i
 }
 
-func (i Image) AddExtension(ext string) *Image {
+func (i *Image) AddExtension(ext string) *Image {
 	i.transformations = i.transformer.AddExtension(i.transformations, ext)
-	return &i
+	return i
 }
 
 func (i *Image) AddAngle(angle transformations.Angle) *Image {

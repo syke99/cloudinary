@@ -57,7 +57,7 @@ func NewSignedCloudinary(client *http.Client, cloud string, key string, secret s
 	}
 }
 
-func (c *Cloudinary) Image(name string) image.Image {
+func (c *Cloudinary) Image(name string) *image.Image {
 	reqUrl := fmt.Sprintf("%s/%s/image/", resources.BaseUrl, c.config.Cloud)
 	uploadUrl := fmt.Sprintf("%s/v1_1/%s/image/", resources.BaseUrl, c.config.Cloud)
 
@@ -72,10 +72,10 @@ func (c *Cloudinary) Image(name string) image.Image {
 		UploadUrl:   uploadUrl,
 	}
 
-	return image.Image{}.ConfigureImage(config)
+	return image.NewImage(config)
 }
 
-func (c *Cloudinary) Video(name string) video.Video {
+func (c *Cloudinary) Video(name string) *video.Video {
 	reqUrl := fmt.Sprintf("%s/%s/video/", resources.BaseUrl, c.config.Cloud)
 	uploadUrl := fmt.Sprintf("%s/v1_1/%s/video/", resources.BaseUrl, c.config.Cloud)
 
@@ -90,7 +90,7 @@ func (c *Cloudinary) Video(name string) video.Video {
 		UploadUrl:   uploadUrl,
 	}
 
-	return video.Video{}.ConfigureVideo(config)
+	return video.NewVideo(config)
 }
 
 func (c *Cloudinary) NewAngle(degrees int, mode string) (transformations.Angle, error) {
