@@ -2,18 +2,19 @@ package video
 
 import (
 	"fmt"
-	"github.com/syke99/cloudinary/internal/api/upload"
+	"net/http"
+	"reflect"
+	"strconv"
+	"time"
+
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
-	upload2 "github.com/syke99/cloudinary/pkg/api/request"
-	upload3 "github.com/syke99/cloudinary/pkg/api/upload"
-	"net/http"
-	"reflect"
-	"strconv"
-	"time"
+	"github.com/syke99/cloudinary/pkg/api/models/api_handlers/uploader"
+	"github.com/syke99/cloudinary/pkg/api/request"
+	"github.com/syke99/cloudinary/pkg/api/upload"
 )
 
 type Video struct {
@@ -21,7 +22,7 @@ type Video struct {
 	validator       validator.Validator
 	config          config.CloudinaryConfig
 	transformer     transformer.Transformer
-	uploader        upload3.Uploader
+	uploader        upload.Uploader
 	transformations []string
 	Name            string
 	Ext             string
@@ -67,7 +68,7 @@ type video interface {
 	AddXY() *Video
 	AddVariable() *Video
 	RequestVideo(string) ([]byte, error)
-	UploadVideo(upload.UploaderParameters) (upload.UploaderResponse, error)
+	UploadVideo(uploader.UploaderParameters) (uploader.UploaderResponse, error)
 }
 
 func NewVideo(config config.MediaConfig) *Video {
@@ -263,14 +264,14 @@ func (v *Video) RequestVideo(delivery string) ([]byte, error) {
 		return []byte{}, err
 	}
 
-	r := upload2.Request{}
+	r := request.Request{}
 	reqUrl := fmt.Sprintf("%s/%s/%s/%s", v.ReqUrl, delivery, v.Name, v.Ext)
 	return r.RequestMedia(v.client, reqUrl), nil
 }
 
-func (v *Video) UploadVideo(params upload.UploaderParameters) (upload.UploaderResponse, error) {
+func (v *Video) UploadVideo(params uploader.UploaderParameters) (uploader.UploaderResponse, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return upload.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
+		return uploader.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range v.transformations {

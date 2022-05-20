@@ -2,18 +2,19 @@ package image
 
 import (
 	"fmt"
-	"github.com/syke99/cloudinary/internal/api/upload"
+	"net/http"
+	"reflect"
+	"strconv"
+	"time"
+
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
 	"github.com/syke99/cloudinary/internal/transformer/transformations"
 	"github.com/syke99/cloudinary/internal/validator"
-	upload2 "github.com/syke99/cloudinary/pkg/api/request"
-	upload3 "github.com/syke99/cloudinary/pkg/api/upload"
-	"net/http"
-	"reflect"
-	"strconv"
-	"time"
+	"github.com/syke99/cloudinary/pkg/api/models/api_handlers/uploader"
+	"github.com/syke99/cloudinary/pkg/api/request"
+	"github.com/syke99/cloudinary/pkg/api/upload"
 )
 
 type Image struct {
@@ -21,7 +22,7 @@ type Image struct {
 	validator       validator.Validator
 	config          config.CloudinaryConfig
 	transformer     transformer.Transformer
-	uploader        upload3.Uploader
+	uploader        upload.Uploader
 	transformations []string
 	Name            string
 	Ext             string
@@ -63,7 +64,7 @@ type image interface {
 	AddZoom() *Image
 	AddVariable() *Image
 	RequestImage(string) ([]byte, error)
-	UploadImage(upload.UploaderParameters) (upload.UploaderResponse, error)
+	UploadImage(uploader.UploaderParameters) (uploader.UploaderResponse, error)
 }
 
 func NewImage(config config.MediaConfig) *Image {
@@ -244,14 +245,14 @@ func (i *Image) RequestImage(delivery string) ([]byte, error) {
 		return []byte{}, err
 	}
 
-	r := upload2.Request{}
+	r := request.Request{}
 	reqUrl := fmt.Sprintf("%s/%s/%s/%s", i.ReqUrl, delivery, i.Name, i.Ext)
 	return r.RequestMedia(i.client, reqUrl), nil
 }
 
-func (i *Image) UploadImage(params upload.UploaderParameters) (upload.UploaderResponse, error) {
+func (i *Image) UploadImage(params uploader.UploaderParameters) (uploader.UploaderResponse, error) {
 	if reflect.ValueOf(params).Len() == 0 {
-		return upload.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
+		return uploader.UploaderResponse{}, internal_resources.NoUploadParamsSupplied
 	}
 
 	for _, transformation := range i.transformations {
