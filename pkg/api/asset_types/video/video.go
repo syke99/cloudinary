@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/syke99/cloudinary/pkg/resources/models"
+
 	"github.com/syke99/cloudinary/internal/config"
 	"github.com/syke99/cloudinary/internal/internal_resources"
 	"github.com/syke99/cloudinary/internal/transformer"
@@ -14,7 +16,6 @@ import (
 	"github.com/syke99/cloudinary/internal/validator"
 	"github.com/syke99/cloudinary/pkg/api/actions/request"
 	"github.com/syke99/cloudinary/pkg/api/actions/upload"
-	"github.com/syke99/cloudinary/pkg/api/models"
 )
 
 type Video struct {

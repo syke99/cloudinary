@@ -61,33 +61,33 @@ const (
 
 // AudioFrequencies constants libfdk_aac
 const (
-	Libfdk_aac1  = 96000
-	Libfdk_aac2  = 88200
-	libfdk_aac3  = 64000
-	libfdk_aac4  = 48000
-	libfdk_aac5  = 44100
-	libfdk_aac6  = 32000
-	libfdk_aac7  = 24000
-	libfdk_aac8  = 22050
-	libfdk_aac9  = 16000
-	libfdk_aac10 = 12000
-	libfdk_aac11 = 11025
-	libfdk_aac12 = 8000
-	libfdk_aac13 = 0
+	LibfdkAac1  = 96000
+	LibfdkAac2  = 88200
+	libfdkAac3  = 64000
+	libfdkAac4  = 48000
+	libfdkAac5  = 44100
+	libfdkAac6  = 32000
+	libfdkAac7  = 24000
+	libfdkAac8  = 22050
+	libfdkAac9  = 16000
+	libfdkAac10 = 12000
+	libfdkAac11 = 11025
+	libfdkAac12 = 8000
+	libfdkAac13 = 0
 )
 
 // AudioFrequencies constants mp3
 const (
-	Mp3_1  = 44100
-	Mp3_2  = 48000
-	Mp3_3  = 32000
-	Mp3_4  = 22050
-	Mp3_5  = 24000
-	Mp3_6  = 16000
-	Mp3_7  = 11025
-	Mp3_8  = 12000
-	Mp3_9  = 8000
-	Mp3_10 = 0
+	Mp3One   = 44100
+	Mp3Two   = 48000
+	Mp3Three = 32000
+	Mp3Four  = 22050
+	Mp3Five  = 24000
+	Mp3Six   = 16000
+	Mp3Seven = 11025
+	Mp3Eight = 12000
+	Mp3Nine  = 8000
+	Mp3Ten   = 0
 )
 
 // AudioFrequencies constants opus

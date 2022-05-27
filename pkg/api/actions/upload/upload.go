@@ -14,7 +14,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/syke99/cloudinary/pkg/api/models"
+	"github.com/syke99/cloudinary/pkg/resources/models"
 )
 
 type Uploader struct {
